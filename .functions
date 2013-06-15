@@ -1,30 +1,43 @@
 #Open Project Folder
 function oprj() {
-	oecps
-	cd $1
-	if test -d /project; then cd /project; fi 
+	if [[ -n "$1" ]]
+		then
+			oecps
+			cd $1
+			if test -d /project
+				then
+					cd /project
+			fi
+		else
+			echo "Project Name Missing"
+	fi
 }
 
 #Setup Project
 function stpprj() {
-	echo "Seting Up Project: $1"
-	oecps
-	if test -d $1
+	if [[ -n "$1" ]]
 		then
-			cd $1
+			echo "Seting Up Project: $1"
+			oecps
+			if test -d $1
+				then
+					cd $1
+				else
+					mkdir $1
+					cd $1
+			fi
+			cp -R ~/Eclipse/TemplateX/project .
+			cp ~/Eclipse/TemplateX/build.xml .
+			cp ~/Eclipse/TemplateX/config.rb .
+			mkdir ./sources
+			mkdir ./sources/"project meta images"
+			mkdir ./sources/"project sources"
+			find . -name "txex.*.*" -type f -delete
+			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
+			cd project
 		else
-			mkdir $1
-			cd $1
+			echo "Project Name Missing"
 	fi
-	cp -R ~/Eclipse/TemplateX/project .
-	cp ~/Eclipse/TemplateX/build.xml .
-	cp ~/Eclipse/TemplateX/config.rb .
-	mkdir ./sources
-	mkdir ./sources/"project meta images"
-	mkdir ./sources/"project sources"
-	find . -name "txex.*.*" -type f -delete
-	perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
-	cd project
 }
 
 #Sass Watch Project

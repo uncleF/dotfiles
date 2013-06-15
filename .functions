@@ -1,13 +1,9 @@
-#Open Project Folder
+#Open Project
 function oprj() {
 	if [[ -n "$1" ]]
 		then
 			oecps
 			cd $1
-			if test -d /project
-				then
-					cd /project
-			fi
 		else
 			echo "Project Name Missing"
 	fi
@@ -17,7 +13,7 @@ function oprj() {
 function stpprj() {
 	if [[ -n "$1" ]]
 		then
-			echo "Seting Up Project: $1"
+			echo "Setting Up Project $1"
 			oecps
 			if test -d $1
 				then
@@ -35,26 +31,27 @@ function stpprj() {
 			find . -name "txex.*.*" -type f -delete
 			find . -name "txdemo.*.*" -type f -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
-			cd project
 		else
 			echo "Project Name Missing"
 	fi
 }
 
-#Sass Watch Project
+#Watch Project with Sass
 function swtprj() {
 	if test -d project
 		then
 			sass --compass --sourcemap --debug-info --watch project/res/sass.txsrc:project/res/css.txsrc
-		else
-			cd ..
-			sass --compass --sourcemap --debug-info --watch project/res/sass.txsrc:project/res/css.txsrc
 	fi
 }
 
-#Start Server from Current Folder
+#Start Server with Current Project
 function server() {
-	local port="${1:-8000}"
-	open "http://localhost:${port}/"
-	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+	if test -d project
+		then
+			cd project
+			local port="${1:-8000}"
+			open "http://localhost:${port}/"
+			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+			cd ..
+	fi
 }

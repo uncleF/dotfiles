@@ -1,0 +1,4 @@
+#Navigation Functions
+function oprj() {
+	cd $1"/project"
+}

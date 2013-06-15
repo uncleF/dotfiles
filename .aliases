@@ -3,3 +3,4 @@ alias swt='sass --compass --sourcemap --debug-info --watch project/res/sass.txsr
 
 #Navigation Aliases
 alias oecps='cd ~/Eclipse'
+alias otx='cd ~/Eclipse/TemplateX/project'

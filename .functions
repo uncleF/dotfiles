@@ -33,6 +33,7 @@ function stpprj() {
 			mkdir ./sources/"project meta images"
 			mkdir ./sources/"project sources"
 			find . -name "txex.*.*" -type f -delete
+			find . -name "txdemo.*.*" -type f -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 			cd project
 		else

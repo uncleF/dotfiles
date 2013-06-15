@@ -1,8 +1,44 @@
-#Navigation Functions
+#Open Project Folder
 function oprj() {
-	cd $1"/project"
+	oecps
+	cd $1
+	if test -d /project; then cd /project; fi 
 }
 
+#Setup Project
+function stpprj() {
+	echo "Seting Up Project: $1"
+	oecps
+	if test -d $1
+		then
+			cd $1
+		else
+			mkdir $1
+			cd $1
+	fi
+	cp -R ~/Eclipse/TemplateX/project .
+	cp ~/Eclipse/TemplateX/build.xml .
+	cp ~/Eclipse/TemplateX/config.rb .
+	mkdir ./sources
+	mkdir ./sources/"project meta images"
+	mkdir ./sources/"project sources"
+	find . -name "txex.*.*" -type f -delete
+	perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
+	cd project
+}
+
+#Sass Watch Project
+function swtprj() {
+	if test -d project
+		then
+			sass --compass --sourcemap --debug-info --watch project/res/sass.txsrc:project/res/css.txsrc
+		else
+			cd ..
+			sass --compass --sourcemap --debug-info --watch project/res/sass.txsrc:project/res/css.txsrc
+	fi
+}
+
+#Start Server from Current Folder
 function server() {
 	local port="${1:-8000}"
 	open "http://localhost:${port}/"

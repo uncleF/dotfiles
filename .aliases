@@ -1,6 +1,3 @@
-#Sass Watch Alias
-alias swt='sass --compass --sourcemap --debug-info --watch project/res/sass.txsrc:project/res/css.txsrc'
-
 #Navigation Aliases
 alias oecps='cd ~/Eclipse'
 alias otx='cd ~/Eclipse/TemplateX/project'

@@ -30,6 +30,7 @@ function stpprj() {
 			mkdir ./sources/"project sources"
 			find . -name "txex.*.*" -type f -delete
 			find . -name "txdemo.*.*" -type f -delete
+			find ./project -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 		else
 			echo "Project Name Missing"

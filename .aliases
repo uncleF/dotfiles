@@ -1,3 +1,4 @@
 #Navigation Aliases
-alias oecps = "cd ~/Eclipse"
-alias otx = "cd ~/Eclipse/TemplateX"
+alias oecps="cd ~/Eclipse"
+alias otx="cd ~/Eclipse/TemplateX"
+alias oax="cd ~/Eclipse/AppX"

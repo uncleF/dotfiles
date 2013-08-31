@@ -37,6 +37,40 @@ function stpprj() {
 	fi
 }
 
+#Setup App Project
+function stpap() {
+	if [[ -n "$1" ]]
+		then
+			echo "Setting Up App Project $1"
+			oecps
+			if test -d $1
+				then
+					cd $1
+				else
+					mkdir $1
+					cd $1
+			fi
+			cp -R ~/Eclipse/AppX/project .
+			cp ~/Eclipse/AppX/build.xml .
+			cp ~/Eclipse/AppX/config.rb .
+			mkdir ./sources
+			mkdir ./sources/"project meta images"
+			mkdir ./sources/"project sources"
+			find . -name "txex.*.*" -type f -delete
+			find . -name "txdemo.*.*" -type f -delete
+			find ./project -type d -empty -delete
+			perl -pi -w -e "s/AppX/"$1"/g;" ./build.xml
+			if [[ -n "$2" ]]
+				then
+					perl -pi -w -e "s/appx/"$2"/g;" ./build.xml
+				else
+					perl -pi -w -e "s/appx/"$1"/g;" ./build.xml
+			fi
+		else
+			echo "Project Name Missing"
+	fi
+}
+
 #Watch Project with Sass
 function swtprj() {
 	if test -d project

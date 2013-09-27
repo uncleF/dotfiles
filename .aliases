@@ -1,4 +1,9 @@
 #Navigation Aliases
-alias oecps="cd ~/Eclipse"
-alias otx="cd ~/Eclipse/TemplateX"
-alias oax="cd ~/Eclipse/AppX"
+alias otx="opr TemplateX"
+alias oax="opr AppX"
+dirProjects=~/Projects
+dirProjectWeb="${dirProjects}"/TemplateX
+dirProjectApp="${dirProjects}"/AppX
+
+#Build Aliases & Variables
+buildProperties="${dirProjects}"/build.properties

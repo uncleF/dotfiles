@@ -1,35 +1,28 @@
 #Open Project
-function oprj() {
+function opr() {
 	if [[ -n "$1" ]]
 		then
-			oecps
-			cd $1
+			cd "${dirProjects}"/$1
 		else
-			echo "Project Name Missing"
+			cd "${dirProjects}"
 	fi
 }
 
 #Setup Project
-function stpprj() {
+function stpr() {
 	if [[ -n "$1" ]]
 		then
 			echo "Setting Up Project $1"
-			oecps
-			if test -d $1
+			opr
+			if [[ ! -d $1 ]]
 				then
-					cd $1
-				else
-					mkdir $1
-					cd $1
+					mkdir $1					
 			fi
-			cp -R ~/Eclipse/TemplateX/project .
-			cp ~/Eclipse/TemplateX/build.xml .
-			cp ~/Eclipse/TemplateX/config.rb .
-			mkdir ./sources
-			mkdir ./sources/"project meta images"
-			mkdir ./sources/"project sources"
-			find . -name "txex.*.*" -type f -delete
-			find . -name "txdemo.*.*" -type f -delete
+			cd $1
+			cp -R "${dirProjectWeb}"/project .
+			cp "${dirProjectWeb}"/build.xml "${dirProjectWeb}"/config.rb .
+			mkdir ./sources ./sources/"project meta images" ./sources/"project sources"
+			find . \( -name "txex.*.*" -o -name "txdemo.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 		else
@@ -38,26 +31,20 @@ function stpprj() {
 }
 
 #Setup App Project
-function stpap() {
+function stap() {
 	if [[ -n "$1" ]]
 		then
 			echo "Setting Up App Project $1"
-			oecps
-			if test -d $1
+			opr
+			if [[ ! -d $1 ]]
 				then
-					cd $1
-				else
-					mkdir $1
-					cd $1
+					mkdir $1					
 			fi
-			cp -R ~/Eclipse/AppX/project .
-			cp ~/Eclipse/AppX/build.xml .
-			cp ~/Eclipse/AppX/config.rb .
-			mkdir ./sources
-			mkdir ./sources/"project meta images"
-			mkdir ./sources/"project sources"
-			find . -name "txex.*.*" -type f -delete
-			find . -name "txdemo.*.*" -type f -delete
+			cd $1
+			cp -R "${dirProjectApp}"/project .
+			cp "${dirProjectApp}"/build.xml "${dirProjectApp}"/config.rb .
+			mkdir ./sources ./sources/"project meta images" ./sources/"project sources"
+			find . \( -name "txex.*.*" -o -name "txdemo.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/AppX/"$1"/g;" ./build.xml
 			if [[ -n "$2" ]]
@@ -71,19 +58,41 @@ function stpap() {
 	fi
 }
 
-#Watch Project with Sass
-function swtprj() {
-	if test -d project
+#Watch Current Project with Sass
+function swpr() {
+	if [[ -d project ]]
 		then
 			sass --compass --sourcemap --watch project/res/sass.txsrc:project/res/css.txsrc
 		else
-			echo "Nothing To Watch"
+			echo "Nothing to Watch"
 	fi
 }
 
-#Start Server with Current Project
+#Build Current Project with ANT
+function bpr() {
+	shareFlag=false
+	while getopts ":s" opt; do
+		case "${opt}" in
+			s)
+				shareFlag=true
+				;;
+			\?)
+				echo "Invalid Parameters"
+				;;
+		esac
+	done
+	OPTIND=1
+	if $shareFlag
+		then
+			ant -propertyfile $buildProperties -Dbuild.share=share
+		else
+			ant -propertyfile $buildProperties
+	fi
+}
+
+#Start Local HTTP Server with Current Project
 function server() {
-	if test -d project
+	if [[ -d project ]]
 		then
 			cd project
 			local port="${1:-8000}"
@@ -91,6 +100,6 @@ function server() {
 			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 			cd ..
 		else
-			echo "Nothing To Serve"
+			echo "Nothing to Serve"
 	fi
 }

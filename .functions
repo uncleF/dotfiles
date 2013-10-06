@@ -92,14 +92,40 @@ function bpr() {
 
 #Start Local HTTP Server with Current Project
 function server() {
-	if [[ -d project ]]
+	serveBuild=false
+	while getopts ":b" opt; do
+		case "${opt}" in
+			b)
+				serveBuild=true
+				;;
+			\?)
+				echo "Invalid Parameters"
+				;;
+		esac
+	done
+	OPTIND=1
+	if $serveBuild
 		then
-			cd project
-			local port="${1:-8000}"
-			open "http://localhost:${port}/"
-			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
-			cd ..
+			if [[ -d build ]]
+				then
+					cd build
+					local port="${2:-8000}"
+					open "http://localhost:${port}/"
+					python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+					cd ..
+				else
+					echo "Nothing to Serve"
+			fi
 		else
-			echo "Nothing to Serve"
+			if [[ -d project ]]
+				then
+					cd project
+					local port="${1:-8000}"
+					open "http://localhost:${port}/"
+					python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+					cd ..
+				else
+					echo "Nothing to Serve"
+			fi
 	fi
 }

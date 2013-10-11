@@ -90,13 +90,17 @@ function bpr() {
 	fi
 }
 
-#Start Local HTTP Server with Current Project
+#Start Local HTTP Server and Serve Current Project
 function server() {
-	serveBuild=false
-	while getopts ":b" opt; do
+	port=8000
+	dir="project"
+	while getopts ":bp:" opt; do
 		case "${opt}" in
 			b)
-				serveBuild=true
+				dir="build"
+				;;
+			p)
+				port=$OPTARG
 				;;
 			\?)
 				echo "Invalid Parameters"
@@ -104,28 +108,45 @@ function server() {
 		esac
 	done
 	OPTIND=1
-	if $serveBuild
+	if [[ -d $dir ]]
 		then
-			if [[ -d build ]]
-				then
-					cd build
-					local port="${2:-8000}"
-					open "http://localhost:${port}/"
-					python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
-					cd ..
-				else
-					echo "Nothing to Serve"
-			fi
+			cd $dir
+			open "http://localhost:${port}/"
+			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+			cd ..
 		else
-			if [[ -d project ]]
-				then
-					cd project
-					local port="${1:-8000}"
-					open "http://localhost:${port}/"
-					python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
-					cd ..
-				else
-					echo "Nothing to Serve"
-			fi
+			echo "Nothing to Serve"
+	fi
+}
+
+#Start All Browsers (Current Versions or Latest Nightly Builds) with Custom URL or http://localhost:8000 by Default
+function browsers() {
+	nightlyFlag=false
+	url="http://localhost:8000/"
+	while getopts ":nu:" opt; do
+		case "${opt}" in
+			n)
+				nightlyFlag=true
+				;;
+			u)
+				url=$OPTARG
+				;;
+			\?)
+				echo "Invalid Arguments"
+				;;
+		esac
+	done
+	OPTIND=1
+	if $nightlyFlag
+		then
+			open -a Google\ Chrome\ Canary $url
+			open -a Opera\ Next $url
+			open -a WebKit $url
+			open -a FirefoxNightly $url
+		else
+			open -a Google\ Chrome $url
+			open -a Opera $url
+			open -a Safari $url
+			open -a Firefox $url
 	fi
 }

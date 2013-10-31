@@ -16,7 +16,7 @@ function stpr() {
 			opr
 			if [[ ! -d $1 ]]
 				then
-					mkdir $1					
+					mkdir $1
 			fi
 			cd $1
 			cp -R "${dirProjectWeb}"/project .
@@ -25,6 +25,7 @@ function stpr() {
 			find . \( -name "txex.*.*" -o -name "txdemo.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
+			open -a Sublime\ Text\ 2 project/index.html project/res/sass.txsrc/layout.sass build.xml project/res/sass.txsrc/txsass/_tx.project.sass
 		else
 			echo "Project Name Missing"
 	fi
@@ -38,7 +39,7 @@ function stap() {
 			opr
 			if [[ ! -d $1 ]]
 				then
-					mkdir $1					
+					mkdir $1
 			fi
 			cd $1
 			cp -R "${dirProjectApp}"/project .
@@ -53,6 +54,7 @@ function stap() {
 				else
 					perl -pi -w -e "s/appx/"$1"/g;" ./build.xml
 			fi
+			open -a Sublime\ Text\ 2 project/index.html project/res/sass.txsrc/layout.sass build.xml project/res/sass.txsrc/txsass/_tx.project.sass
 		else
 			echo "Project Name Missing"
 	fi

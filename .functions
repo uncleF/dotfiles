@@ -20,12 +20,13 @@ function stpr() {
 			fi
 			cd $1
 			cp -R "${dirProjectWeb}"/project .
-			cp "${dirProjectWeb}"/build.xml "${dirProjectWeb}"/config.rb .
-			mkdir ./sources ./sources/"project meta images" ./sources/"project sources"
-			find . \( -name "txex.*.*" -o -name "txdemo.*.*" -o -name ".DS_Store" \) -type f -delete
+			cp "${dirProjectWeb}"/build.xml "${dirProjectWeb}"/config.rb "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/cssorder.json "${dirProjectWeb}"/package.json .
+			mkdir ./meta ./design/sprites
+			find . \( -name "tx.*.*" -o -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
-			open -a Sublime\ Text\ 2 project/index.html project/res/sass.txsrc/layout.sass build.xml project/res/sass.txsrc/txsass/_tx.project.sass
+			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
+			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
 		else
 			echo "Project Name Missing"
 	fi
@@ -43,18 +44,21 @@ function stap() {
 			fi
 			cd $1
 			cp -R "${dirProjectApp}"/project .
-			cp "${dirProjectApp}"/build.xml "${dirProjectApp}"/config.rb .
-			mkdir ./sources ./sources/"project meta images" ./sources/"project sources"
-			find . \( -name "txex.*.*" -o -name "txdemo.*.*" -o -name ".DS_Store" \) -type f -delete
+			cp "${dirProjectApp}"/build.xml "${dirProjectApp}"/config.rb "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/cssorder.json "${dirProjectApp}"/package.json .
+			mkdir ./meta ./design/sprites
+			find . \( -name "tx.*.*" -o -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/AppX/"$1"/g;" ./build.xml
+			perl -pi -w -e "s/AppX/"$1"/g;" ./gruntfile.js
 			if [[ -n "$2" ]]
 				then
 					perl -pi -w -e "s/appx/"$2"/g;" ./build.xml
+					perl -pi -w -e "s/appx/"$2"/g;" ./gruntfile.js
 				else
 					perl -pi -w -e "s/appx/"$1"/g;" ./build.xml
+					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
 			fi
-			open -a Sublime\ Text\ 2 project/index.html project/res/sass.txsrc/layout.sass build.xml project/res/sass.txsrc/txsass/_tx.project.sass
+			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
 		else
 			echo "Project Name Missing"
 	fi
@@ -64,7 +68,7 @@ function stap() {
 function swpr() {
 	if [[ -d project ]]
 		then
-			sass --compass --sourcemap --watch project/res/sass.txsrc:project/res/css.txsrc
+			sass --compass --sourcemap --watch project/res/sass.dev:project/res/css.dev
 		else
 			echo "Nothing to Watch"
 	fi
@@ -90,6 +94,7 @@ function bpr() {
 		else
 			ant -propertyfile $buildProperties
 	fi
+	find ./project -type d -empty -delete
 }
 
 #Start Local HTTP Server and Serve Current Project

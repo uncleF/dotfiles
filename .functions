@@ -26,8 +26,8 @@ function stpr() {
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
-			sudo npm install
 			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+			echo "Run npm install to Install npm Dependencies for Project $1"
 		else
 			echo "Project Name Missing"
 	fi
@@ -59,8 +59,8 @@ function stap() {
 					perl -pi -w -e "s/appx/"$1"/g;" ./build.xml
 					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
 			fi
-			sudo npm install
 			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+			echo "Run npm install to Install npm Dependencies for App Project $1"
 		else
 			echo "Project Name Missing"
 	fi
@@ -110,7 +110,7 @@ function bpr() {
 					ant -propertyfile $buildProperties
 			fi
 	fi
-	find ./project -type d -empty -delete
+	find ./build -type d -empty -delete
 }
 
 #Start Local HTTP Server and Serve Current Project by Default (or Its Build)

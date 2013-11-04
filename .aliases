@@ -6,4 +6,5 @@ dirProjectWeb="${dirProjects}"/TemplateX
 dirProjectApp="${dirProjects}"/AppX
 
 #Build Aliases & Variables
-buildProperties="${dirProjects}"/build.properties
+export buildProperties="${dirProjects}"/antBuild.properties
+export buildJSON="${dirProjects}"/gruntBuild.json

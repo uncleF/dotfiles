@@ -26,8 +26,22 @@ function stpr() {
 			find ./project -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
+			while true; do
+					read -p "Do You Want to Install npm Dependencies? " yn
+					case $yn in
+							[Yy]*)
+								sudo npm install
+								break
+								;;
+							[Nn]*)
+								break
+								;;
+							*)
+								echo "Please Answer Yes or No"
+								;;
+					esac
+			done
 			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-			echo "Run npm install to Install npm Dependencies for Project $1"
 		else
 			echo "Project Name Missing"
 	fi
@@ -59,8 +73,22 @@ function stap() {
 					perl -pi -w -e "s/appx/"$1"/g;" ./build.xml
 					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
 			fi
+			while true; do
+					read -p "Do You Want to Install npm Dependencies? " yn
+					case $yn in
+							[Yy]*)
+								sudo npm install
+								break
+								;;
+							[Nn]*)
+								break
+								;;
+							*)
+								echo "Please Answer Yes or No"
+								;;
+					esac
+			done
 			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-			echo "Run npm install to Install npm Dependencies for App Project $1"
 		else
 			echo "Project Name Missing"
 	fi
@@ -90,6 +118,7 @@ function bpr() {
 				;;
 			\?)
 				echo "Invalid Parameters"
+				exit
 				;;
 		esac
 	done
@@ -127,6 +156,7 @@ function server() {
 				;;
 			\?)
 				echo "Invalid Parameters"
+				exit
 				;;
 		esac
 	done
@@ -155,7 +185,8 @@ function browsers() {
 				url=$OPTARG
 				;;
 			\?)
-				echo "Invalid Arguments"
+				echo "Invalid Parameters"
+				exit
 				;;
 		esac
 	done

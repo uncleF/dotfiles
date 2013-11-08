@@ -27,7 +27,7 @@ function stpr() {
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
 			while true; do
-					read -p "Do You Want to Install npm Dependencies? " yn
+					read -p "Do You Want to Install npm Dependencies (y/n)? " yn
 					case $yn in
 							[Yy]*)
 								sudo npm install
@@ -74,7 +74,7 @@ function stap() {
 					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
 			fi
 			while true; do
-					read -p "Do You Want to Install npm Dependencies? " yn
+					read -p "Do You Want to Install npm Dependencies (y/n)? " yn
 					case $yn in
 							[Yy]*)
 								sudo npm install
@@ -114,7 +114,7 @@ function bpr() {
 				shareFlag=true
 				;;
 			a)
-				builder=false
+				builder="ant"
 				;;
 			\?)
 				echo "Invalid Parameters"
@@ -123,20 +123,20 @@ function bpr() {
 		esac
 	done
 	OPTIND=1
-	if $builder
+	if [ "$builder" == "ant" ]
 		then
-			if $shareFlag
-				then
-					grunt build-share
-				else
-					grunt build
-			fi
-		else
 			if $shareFlag
 				then
 					ant -propertyfile $buildProperties -Dbuild.share=share
 				else
 					ant -propertyfile $buildProperties
+			fi
+		else
+			if $shareFlag
+				then
+					grunt build-share
+				else
+					grunt build
 			fi
 	fi
 	find ./build -type d -empty -delete

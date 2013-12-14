@@ -41,7 +41,23 @@ function stpr() {
 								;;
 					esac
 			done
-			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+			while true; do
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " yn
+					case $yn in
+							[Yy]*)
+								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+								swpr
+								break
+								;;
+							[Nn]*)
+								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+								break
+								;;
+							*)
+								echo "Please Answer Yes or No"
+								;;
+					esac
+			done
 		else
 			echo "Project Name Missing"
 	fi
@@ -88,7 +104,23 @@ function stap() {
 								;;
 					esac
 			done
-			open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+			while true; do
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " yn
+					case $yn in
+							[Yy]*)
+								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+								swpr
+								break
+								;;
+							[Nn]*)
+								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
+								break
+								;;
+							*)
+								echo "Please Answer Yes or No"
+								;;
+					esac
+			done
 		else
 			echo "Project Name Missing"
 	fi
@@ -107,7 +139,7 @@ function swpr() {
 #Build Current Project with Grunt (by Default) or ANT
 function bpr() {
 	shareFlag=false
-	builder=true
+	builder="grunt"
 	while getopts ":sa" opt; do
 		case "${opt}" in
 			s)

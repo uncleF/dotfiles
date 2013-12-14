@@ -27,8 +27,8 @@ function stpr() {
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
 			while true; do
-					read -p "Do You Want to Install npm Dependencies (y/n)? " yn
-					case $yn in
+					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+					case $ynnpm in
 							[Yy]*)
 								sudo npm install
 								break
@@ -42,8 +42,8 @@ function stpr() {
 					esac
 			done
 			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " yn
-					case $yn in
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynswpr
+					case $ynswpr in
 							[Yy]*)
 								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
 								swpr
@@ -90,8 +90,8 @@ function stap() {
 					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
 			fi
 			while true; do
-					read -p "Do You Want to Install npm Dependencies (y/n)? " yn
-					case $yn in
+					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+					case $ynnpm in
 							[Yy]*)
 								sudo npm install
 								break
@@ -105,8 +105,8 @@ function stap() {
 					esac
 			done
 			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " yn
-					case $yn in
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynswpr
+					case $ynswpr in
 							[Yy]*)
 								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
 								swpr

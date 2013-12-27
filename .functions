@@ -20,7 +20,7 @@ function stpr() {
 			fi
 			cd $1
 			cp -R "${dirProjectWeb}"/project .
-			cp "${dirProjectWeb}"/build.xml "${dirProjectWeb}"/config.rb "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/cssorder.json "${dirProjectWeb}"/package.json .
+			cp "${dirProjectWeb}"/build.xml "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/cssorder.json "${dirProjectWeb}"/package.json .
 			mkdir ./meta ./design ./design/sprites
 			find . \( -name "tx.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
@@ -75,7 +75,7 @@ function stap() {
 			fi
 			cd $1
 			cp -R "${dirProjectApp}"/project .
-			cp "${dirProjectApp}"/build.xml "${dirProjectApp}"/config.rb "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/cssorder.json "${dirProjectApp}"/package.json .
+			cp "${dirProjectApp}"/build.xml "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/cssorder.json "${dirProjectApp}"/package.json .
 			mkdir ./meta ./design ./design/sprites
 			find . \( -name "tx.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete

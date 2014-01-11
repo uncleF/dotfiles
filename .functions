@@ -130,7 +130,7 @@ function stap() {
 function swpr() {
 	if [[ -d project ]]
 		then
-			sass --compass --sourcemap --watch project/res/sass.dev:project/res/css.dev
+			sass --compass --sourcemap --style expanded --watch project/res/sass.dev:project/res/css.dev
 		else
 			echo "Nothing to Watch"
 	fi

@@ -1,5 +1,5 @@
 #Open Project
-function opr() {
+function propn() {
 	if [[ -n "$1" ]]
 		then
 			cd "${dirProjects}"/$1
@@ -9,7 +9,7 @@ function opr() {
 }
 
 #Setup Web Project
-function stpr() {
+function prstp() {
 	if [[ -n "$1" ]]
 		then
 			echo "Setting Up Project $1"
@@ -64,7 +64,7 @@ function stpr() {
 }
 
 #Setup App Project
-function stap() {
+function apstp() {
 	if [[ -n "$1" ]]
 		then
 			echo "Setting Up App Project $1"
@@ -127,7 +127,7 @@ function stap() {
 }
 
 #Watch Current Project with Sass
-function swpr() {
+function prsw() {
 	if [[ -d project ]]
 		then
 			sass --compass --sourcemap --style expanded --watch project/res/sass.dev:project/res/css.dev
@@ -137,7 +137,7 @@ function swpr() {
 }
 
 #Build Current Project with Grunt (by Default) or ANT
-function bpr() {
+function prbld() {
 	shareFlag=false
 	builder="grunt"
 	while getopts ":sa" opt; do

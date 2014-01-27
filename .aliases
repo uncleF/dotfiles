@@ -1,6 +1,6 @@
 #Navigation Aliases
-alias otx="opr TemplateX"
-alias oax="opr AppX"
+alias tx="propn TemplateX"
+alias ax="propn AppX"
 dirProjects=~/Projects
 dirProjectWeb="${dirProjects}"/TemplateX
 dirProjectApp="${dirProjects}"/AppX

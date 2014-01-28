@@ -13,7 +13,7 @@ function prstp() {
 	if [[ -n "$1" ]]
 		then
 			echo "Setting Up Project $1"
-			opr
+			propn
 			if [[ ! -d $1 ]]
 				then
 					mkdir $1
@@ -42,11 +42,11 @@ function prstp() {
 					esac
 			done
 			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynswpr
-					case $ynswpr in
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsw
+					case $ynprsw in
 							[Yy]*)
 								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								swpr
+								prsw
 								break
 								;;
 							[Nn]*)
@@ -68,7 +68,7 @@ function apstp() {
 	if [[ -n "$1" ]]
 		then
 			echo "Setting Up App Project $1"
-			opr
+			propn
 			if [[ ! -d $1 ]]
 				then
 					mkdir $1
@@ -105,11 +105,11 @@ function apstp() {
 					esac
 			done
 			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynswpr
-					case $ynswpr in
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsw
+					case $ynprsw in
 							[Yy]*)
 								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								swpr
+								prsw
 								break
 								;;
 							[Nn]*)

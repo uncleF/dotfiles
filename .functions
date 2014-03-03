@@ -30,7 +30,7 @@ function prstp() {
 					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 					case $ynnpm in
 							[Yy]*)
-								sudo npm install
+								npm install
 								break
 								;;
 							[Nn]*)
@@ -42,11 +42,11 @@ function prstp() {
 					esac
 			done
 			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsw
-					case $ynprsw in
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsass
+					case $ynprsass in
 							[Yy]*)
 								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								prsw
+								prsass
 								break
 								;;
 							[Nn]*)
@@ -93,7 +93,7 @@ function apstp() {
 					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 					case $ynnpm in
 							[Yy]*)
-								sudo npm install
+								npm install
 								break
 								;;
 							[Nn]*)
@@ -105,11 +105,11 @@ function apstp() {
 					esac
 			done
 			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsw
-					case $ynprsw in
+					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsass
+					case $ynprsass in
 							[Yy]*)
 								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								prsw
+								prsass
 								break
 								;;
 							[Nn]*)
@@ -127,7 +127,7 @@ function apstp() {
 }
 
 #Watch Current Project with Sass
-function prsw() {
+function prsass() {
 	if [[ -d project ]]
 		then
 			sass --compass --sourcemap --style expanded --watch project/res/sass.dev:project/res/css.dev

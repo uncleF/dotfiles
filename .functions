@@ -20,11 +20,10 @@ function prstp() {
 			fi
 			cd $1
 			cp -R "${dirProjectWeb}"/project .
-			cp "${dirProjectWeb}"/build.xml "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/cssorder.json "${dirProjectWeb}"/package.json .
+			cp "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/cssorder.json "${dirProjectWeb}"/package.json .
 			mkdir ./meta ./design ./design/sprites
 			find . \( -name "tx.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
-			perl -pi -w -e "s/TemplateX/"$1"/g;" ./build.xml
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
 			while true; do
 					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
@@ -75,18 +74,15 @@ function apstp() {
 			fi
 			cd $1
 			cp -R "${dirProjectApp}"/project .
-			cp "${dirProjectApp}"/build.xml "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/cssorder.json "${dirProjectApp}"/package.json .
+			cp "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/cssorder.json "${dirProjectApp}"/package.json .
 			mkdir ./meta ./design ./design/sprites
 			find . \( -name "tx.*.*" -o -name ".DS_Store" \) -type f -delete
 			find ./project -type d -empty -delete
-			perl -pi -w -e "s/AppX/"$1"/g;" ./build.xml
 			perl -pi -w -e "s/AppX/"$1"/g;" ./gruntfile.js
 			if [[ -n "$2" ]]
 				then
-					perl -pi -w -e "s/appx/"$2"/g;" ./build.xml
 					perl -pi -w -e "s/appx/"$2"/g;" ./gruntfile.js
 				else
-					perl -pi -w -e "s/appx/"$1"/g;" ./build.xml
 					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
 			fi
 			while true; do
@@ -129,8 +125,25 @@ function apstp() {
 #Watch Current Project with Sass
 function prsass() {
 	if [[ -d project ]]
+		gruntSass=false
 		then
-			sass --compass --sourcemap --style expanded --watch project/res/sass.dev:project/res/css.dev
+			while getopts ":g" opt; do
+				case "${opt}" in
+					g)
+						gruntSass=true
+						;;
+					\?)
+						echo "Invalid Parameters"
+						exit
+						;;
+				esac
+			done
+			if $gruntSass
+				then
+					grunt watchSass
+				else
+					sass --compass --sourcemap --style expanded --watch project/res/sass.dev:project/res/css.dev
+			fi
 		else
 			echo "Nothing to Watch"
 	fi

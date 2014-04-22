@@ -84,31 +84,32 @@ function apstp() {
 					esac
 			done
 		else
-			echo "Please Enter Project and Package Names"
+			echo "Please Enter Project and JavaScript Package Names"
 	fi
 }
 
 #Watch Current Project with Sass
 function prsass() {
 	if [[ -d dev ]]
-		compass=false
-		while getopts ":c" opt; do
-			case "${opt}" in
-				c)
-					compass=true
-					;;
-				\?)
-					echo "Invalid Parameters"
-					exit
-					;;
-			esac
-		done
-		if $compass
-			then
-				sass --compass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
-			else
-				sass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
-		fi
+		then
+			compass=false
+			while getopts ":c" opt; do
+				case "${opt}" in
+					c)
+						compass=true
+						;;
+					\?)
+						echo "Invalid Parameters"
+						exit
+						;;
+				esac
+			done
+			if $compass
+				then
+					sass --compass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
+				else
+					sass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
+			fi
 		else
 			echo "Nothing to Watch / Update Project Structure"
 	fi
@@ -159,7 +160,7 @@ function prbld() {
 					grunt build
 			fi
 	fi
-	# find ./build -type d -empty -delete
+	find ./build -type d -empty -delete
 }
 
 #Start Local HTTP Server and Serve Current Project by Default (or Its Build)
@@ -188,7 +189,7 @@ function server() {
 			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 			cd ..
 		else
-			echo "Nothing to Serve"
+			echo "Nothing to Serve / Missing Directory"
 	fi
 }
 

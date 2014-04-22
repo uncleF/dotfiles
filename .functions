@@ -19,11 +19,11 @@ function prstp() {
 					mkdir $1
 			fi
 			cd $1
-			cp -R "${dirProjectWeb}"/project .
+			cp -R "${dirProjectWeb}"/dev .
 			cp "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/csscombConfig.json "${dirProjectWeb}"/package.json .
-			mkdir ./meta ./design ./design/sprites
-			find . \( -name "tx.*.*" -o -name ".DS_Store" \) -type f -delete
-			find ./project -type d -empty -delete
+			mkdir ./meta ./design ./sources
+			find . \( -name ".DS_Store" \) -type f -delete
+			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
 			while true; do
 					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
@@ -40,25 +40,8 @@ function prstp() {
 								;;
 					esac
 			done
-			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsass
-					case $ynprsass in
-							[Yy]*)
-								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								prsass
-								break
-								;;
-							[Nn]*)
-								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								break
-								;;
-							*)
-								echo "Please Answer Yes or No"
-								;;
-					esac
-			done
 		else
-			echo "Project Name Missing"
+			echo "Please Enter Project Name"
 	fi
 }
 
@@ -75,9 +58,9 @@ function apstp() {
 			cd $1
 			cp -R "${dirProjectApp}"/project .
 			cp "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/csscombConfig.json "${dirProjectApp}"/package.json .
-			mkdir ./meta ./design ./design/sprites
-			find . \( -name "tx.*.*" -o -name ".DS_Store" \) -type f -delete
-			find ./project -type d -empty -delete
+			mkdir ./meta ./design ./sources
+			find . \( -name ".DS_Store" \) -type f -delete
+			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/AppX/"$1"/g;" ./gruntfile.js
 			if [[ -n "$2" ]]
 				then
@@ -100,50 +83,42 @@ function apstp() {
 								;;
 					esac
 			done
-			while true; do
-					read -p "Do You Want to Watch This Project width Sass (y/n)? " ynprsass
-					case $ynprsass in
-							[Yy]*)
-								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								prsass
-								break
-								;;
-							[Nn]*)
-								open -a Sublime\ Text\ 2 project/index.html project/res/sass.dev/layout.sass project/res/sass.dev/tx/_tx.project.sass
-								break
-								;;
-							*)
-								echo "Please Answer Yes or No"
-								;;
-					esac
-			done
 		else
-			echo "Project Name Missing"
+			echo "Please Enter Project and Package Names"
 	fi
 }
 
 #Watch Current Project with Sass
 function prsass() {
-	if [[ -d project ]]
-		gruntSass=false
+	if [[ -d dev ]]
+		compass=false
+		while getopts ":c" opt; do
+			case "${opt}" in
+				c)
+					compass=true
+					;;
+				\?)
+					echo "Invalid Parameters"
+					exit
+					;;
+			esac
+		done
+		if $compass
+			then
+				sass --compass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
+			else
+				sass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
+		fi
+		else
+			echo "Nothing to Watch / Update Project Structure"
+	fi
+}
+
+#Watch Current Project with Grunt.JS Task
+function prwtch() {
+	if [[ -d dev ]]
 		then
-			while getopts ":g" opt; do
-				case "${opt}" in
-					g)
-						gruntSass=true
-						;;
-					\?)
-						echo "Invalid Parameters"
-						exit
-						;;
-				esac
-			done
-			if $gruntSass
-				then
-					grunt watchSass
-				else
-					sass --compass --sourcemap --style expanded --watch project/res/sass.dev:project/res/css.dev
-			fi
+			grunt concurrent
 		else
 			echo "Nothing to Watch"
 	fi
@@ -184,17 +159,17 @@ function prbld() {
 					grunt build
 			fi
 	fi
-	find ./build -type d -empty -delete
+	# find ./build -type d -empty -delete
 }
 
 #Start Local HTTP Server and Serve Current Project by Default (or Its Build)
 function server() {
 	port=8000
-	dir="project"
-	while getopts ":bp:" opt; do
+	dir="dev"
+	while getopts ":d:p:" opt; do
 		case "${opt}" in
-			b)
-				dir="build"
+			d)
+				dir=$OPTARG
 				;;
 			p)
 				port=$OPTARG

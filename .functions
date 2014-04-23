@@ -119,7 +119,24 @@ function prsass() {
 function prwtch() {
 	if [[ -d dev ]]
 		then
-			grunt concurrent
+			reload=false
+			while getopts ":l" opt; do
+				case "${opt}" in
+					l)
+						reload=true
+						;;
+					\?)
+						echo "Invalid Parameters"
+						exit
+						;;
+				esac
+			done
+			if $reload
+				then
+					grunt concurrent:projectWatch
+				else
+					grunt concurrent:projectWatchReload
+			fi
 		else
 			echo "Nothing to Watch"
 	fi

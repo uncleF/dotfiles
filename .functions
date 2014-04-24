@@ -133,9 +133,9 @@ function prwtch() {
 			done
 			if $reload
 				then
-					grunt concurrent:projectWatch
-				else
 					grunt concurrent:projectWatchReload
+				else
+					grunt concurrent:projectWatch
 			fi
 		else
 			echo "Nothing to Watch"

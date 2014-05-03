@@ -1,9 +1,9 @@
-#Navigation Aliases
+#Navigation Aliases & Variables
 alias tx="propn TemplateX"
 alias ax="propn AppX"
-dirProjects=~/Projects
-dirProjectWeb="${dirProjects}"/TemplateX
-dirProjectApp="${dirProjects}"/AppX
+export dirProjects=~/Projects
+export dirProjectWeb="${dirProjects}"/TemplateX
+export dirProjectApp="${dirProjects}"/AppX
 
 #Build Aliases & Variables
 export buildProperties="${dirProjects}"/antBuild.properties

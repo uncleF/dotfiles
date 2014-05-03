@@ -22,7 +22,7 @@ function prstp() {
 			cp -R "${dirProjectWeb}"/dev .
 			cp "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/csscombConfig.json "${dirProjectWeb}"/package.json .
 			mkdir ./meta ./design ./sources
-			find . \( -name ".DS_Store" \) -type f -delete
+			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
 			while true; do
@@ -36,7 +36,7 @@ function prstp() {
 								break
 								;;
 							*)
-								echo "Please Answer Yes or No"
+								echo "Please Answer (y)es or (n)o"
 								;;
 					esac
 			done
@@ -59,7 +59,7 @@ function apstp() {
 			cp -R "${dirProjectApp}"/project .
 			cp "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/csscombConfig.json "${dirProjectApp}"/package.json .
 			mkdir ./meta ./design ./sources
-			find . \( -name ".DS_Store" \) -type f -delete
+			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/AppX/"$1"/g;" ./gruntfile.js
 			if [[ -n "$2" ]]
@@ -79,7 +79,7 @@ function apstp() {
 								break
 								;;
 							*)
-								echo "Please Answer Yes or No"
+								echo "Please Answer (y)es or (n)o"
 								;;
 					esac
 			done

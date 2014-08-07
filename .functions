@@ -115,41 +115,24 @@ function prsass() {
 	fi
 }
 
-#Watch Current Project with Grunt.JS Task
+#Watch Current Project with GruntJS watch-project Task
 function prwtch() {
 	if [[ -d dev ]]
 		then
-			reload=false
-			while getopts ":l" opt; do
-				case "${opt}" in
-					l)
-						reload=true
-						;;
-					\?)
-						echo "Invalid Parameters"
-						exit
-						;;
-				esac
-			done
-			if $reload
-				then
-					grunt concurrent:projectWatchReload
-				else
-					grunt concurrent:projectWatch
-			fi
+			grunt watch-project
 		else
 			echo "Nothing to Watch"
 	fi
 }
 
-#Build Current Project with Grunt (by Default) or ANT
+#Build Current Project using GruntJS by Default or Apache ANT
 function prbld() {
-	shareFlag=false
+	criticalFlag=false
 	builder="grunt"
-	while getopts ":sa" opt; do
+	while getopts ":ca" opt; do
 		case "${opt}" in
-			s)
-				shareFlag=true
+			c)
+				criticalFlag=true
 				;;
 			a)
 				builder="ant"
@@ -163,16 +146,11 @@ function prbld() {
 	OPTIND=1
 	if [ "$builder" == "ant" ]
 		then
-			if $shareFlag
-				then
-					ant -propertyfile $buildProperties -Dbuild.share=share
-				else
-					ant -propertyfile $buildProperties
-			fi
+			ant -propertyfile $buildProperties
 		else
-			if $shareFlag
+			if $criticalFlag
 				then
-					grunt build-share
+					grunt build-critical
 				else
 					grunt build
 			fi
@@ -180,7 +158,7 @@ function prbld() {
 	find ./build -type d -empty -delete
 }
 
-#Start Local HTTP Server and Serve Current Project by Default (or Its Build)
+#Start Local HTTP Server and Serve Current Project (/dev Directory By Default or Some Other if Specified)
 function server() {
 	port=8000
 	dir="dev"
@@ -210,17 +188,21 @@ function server() {
 	fi
 }
 
-#Start All Browsers (Current Versions or Nightly Builds) with Custom URL or http://localhost:8000 by Default
+#Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)
 function browsers() {
 	nightlyFlag=false
 	url="http://localhost:8000/"
-	while getopts ":nu:" opt; do
+	emptyFlag=false
+	while getopts ":neu:" opt; do
 		case "${opt}" in
 			n)
 				nightlyFlag=true
 				;;
 			u)
 				url=$OPTARG
+				;;
+			e)
+				emptyFlag=true
 				;;
 			\?)
 				echo "Invalid Parameters"
@@ -229,16 +211,32 @@ function browsers() {
 		esac
 	done
 	OPTIND=1
-	if $nightlyFlag
+	if $emptyFlag
 		then
-			open -a Google\ Chrome\ Canary $url
-			open -a Opera\ Next $url
-			open -a WebKit $url
-			open -a FirefoxNightly $url
+			if $nightlyFlag
+				then
+					open -a Google\ Chrome\ Canary
+					open -a Opera\ Next
+					open -a WebKit
+					open -a FirefoxNightly
+				else
+					open -a Google\ Chrome
+					open -a Opera
+					open -a Safari
+					open -a Firefox
+			fi
 		else
-			open -a Google\ Chrome $url
-			open -a Opera $url
-			open -a Safari $url
-			open -a Firefox $url
+			if $nightlyFlag
+				then
+					open -a Google\ Chrome\ Canary $url
+					open -a Opera\ Next $url
+					open -a WebKit $url
+					open -a FirefoxNightly $url
+				else
+					open -a Google\ Chrome $url
+					open -a Opera $url
+					open -a Safari $url
+					open -a Firefox $url
+			fi
 	fi
 }

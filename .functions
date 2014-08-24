@@ -45,6 +45,29 @@ function prstp() {
 	fi
 }
 
+#Setup Good-Seller Template Project
+function prgsstp() {
+	if [[ -n "$1" ]]
+		then
+			echo "Setting Up Good-Seller Template Project template$1"
+			propn
+			if [[ ! -d GoodSellerTemplates/template$1 ]]
+				then
+					mkdir GoodSellerTemplates/template$1
+			fi
+			cd "${dirProjects}"/GoodSellerTemplates/template$1
+			cp -R "${dirProjects}"/GoodSellerTemplates/templateBase/dev .
+			cp "${dirProjects}"/GoodSellerTemplates/templateBase/gruntfile.js .
+			mkdir ./meta ./design ./sources
+			find . -name ".DS_Store" -type f -delete
+			find ./dev -type d -empty -delete
+			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$1"/g;" ./gruntfile.js
+			cd ..
+		else
+			echo "Please Enter Template Number"
+	fi
+}
+
 #Setup App Project
 function apstp() {
 	if [[ -n "$1" ]]
@@ -125,6 +148,29 @@ function prwtch() {
 	fi
 }
 
+#Watch Current Project with GruntJS watch-project Task
+function prgswtch() {
+	template="Base"
+	while getopts ":t:" opt; do
+		case "${opt}" in
+			t)
+				template=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	if [[ -d template$template/dev ]]
+		then
+			grunt watch-project --gruntfile template$template/gruntfile.js --base ./ --gstemplate=template$template
+		else
+			echo "Nothing to Watch"
+	fi
+}
+
 #Build Current Project using GruntJS by Default or Apache ANT
 function prbld() {
 	criticalFlag=false
@@ -156,6 +202,35 @@ function prbld() {
 			fi
 	fi
 	find ./build -type d -empty -delete
+}
+
+#Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
+function prgsbld() {
+	criticalFlag=false
+	template="Base"
+	while getopts ":ct:" opt; do
+		case "${opt}" in
+			c)
+				criticalFlag=true
+				;;
+			t)
+				template=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	if $criticalFlag
+		then
+			grunt build-critical --gruntfile template$template/gruntfile.js --base ./ --gstemplate=template$template
+		else
+			grunt build --gruntfile template$template/gruntfile.js --base ./ --gstemplate=template$template
+	fi
+	find template$template/build -type d -empty -delete
+	find template$template/template -type d -empty -delete
 }
 
 #Start Local HTTP Server and Serve Current Project (/dev Directory By Default or Some Other if Specified)

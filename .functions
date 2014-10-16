@@ -21,10 +21,12 @@ function prstp() {
 			cd $1
 			cp -R "${dirProjectWeb}"/dev .
 			cp "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/csscombConfig.json "${dirProjectWeb}"/package.json .
+			cp "${dirProjectWeb}"/TemplateX.sublime-project ./$1.sublime-project
 			mkdir ./meta ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
+			perl -pi -w -e "s/TemplateX/"$1"/g;" ./$1.sublime-project
 			while true; do
 					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 					case $ynnpm in
@@ -40,6 +42,7 @@ function prstp() {
 								;;
 					esac
 			done
+			OPTIND=1
 		else
 			echo "Please Enter Project Name"
 	fi
@@ -58,10 +61,12 @@ function prgsstp() {
 			cd "${dirProjects}"/GoodSellerTemplates/template$1
 			cp -R "${dirProjects}"/GoodSellerTemplates/templateBase/dev .
 			cp "${dirProjects}"/GoodSellerTemplates/templateBase/gruntfile.js .
+			cp "${dirProjects}"/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$1.sublime-project
 			mkdir ./meta ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$1"/g;" ./gruntfile.js
+			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$1"/g;" ./GStemplate$1.sublime-project
 			cd ..
 		else
 			echo "Please Enter Template Number"
@@ -79,12 +84,14 @@ function apstp() {
 					mkdir $1
 			fi
 			cd $1
-			cp -R "${dirProjectApp}"/project .
+			cp -R "${dirProjectApp}"/dev .
 			cp "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/csscombConfig.json "${dirProjectApp}"/package.json .
+			cp "${dirProjectApp}"/AppX.sublime-project ./$1.sublime-project
 			mkdir ./meta ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/AppX/"$1"/g;" ./gruntfile.js
+			perl -pi -w -e "s/AppX/"$1"/g;" ./$1.sublime-project
 			if [[ -n "$2" ]]
 				then
 					perl -pi -w -e "s/appx/"$2"/g;" ./gruntfile.js
@@ -106,6 +113,7 @@ function apstp() {
 								;;
 					esac
 			done
+			OPTIND=1
 		else
 			echo "Please Enter Project and JavaScript Package Names"
 	fi
@@ -127,6 +135,7 @@ function prsass() {
 						;;
 				esac
 			done
+			OPTIND=1
 			if $compass
 				then
 					sass --compass --sourcemap --style expanded --watch dev/res/sass-dev:dev/res/css-dev
@@ -292,7 +301,7 @@ function browsers() {
 				then
 					open -a Google\ Chrome\ Canary
 					open -a Opera\ Next
-					open -a WebKit
+					# open -a WebKit
 					open -a FirefoxNightly
 				else
 					open -a Google\ Chrome
@@ -305,7 +314,7 @@ function browsers() {
 				then
 					open -a Google\ Chrome\ Canary $url
 					open -a Opera\ Next $url
-					open -a WebKit $url
+					# open -a WebKit $url
 					open -a FirefoxNightly $url
 				else
 					open -a Google\ Chrome $url

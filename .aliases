@@ -3,8 +3,10 @@ export dirTemp=~/Temp
 export dirProjects=~/Projects
 export dirProjectWeb="${dirProjects}"/TemplateX
 export dirProjectApp="${dirProjects}"/AppX
+export dirProjectMail="${dirProjects}"/MailX
 alias tx="propn TemplateX"
 alias ax="propn AppX"
+alias mx="propn MailX"
 alias tmp="cd ${dirTemp}"
 
 #Build Aliases & Variables

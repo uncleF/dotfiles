@@ -119,6 +119,46 @@ function apstp() {
 	fi
 }
 
+#Setup Web Project
+function mlstp() {
+	if [[ -n "$1" ]]
+		then
+			echo "Setting Up Mail Template Project $1"
+			propn
+			if [[ ! -d $1 ]]
+				then
+					mkdir $1
+			fi
+			cd $1
+			cp -R "${dirProjectMail}"/dev .
+			cp "${dirProjectMail}"/gruntfile.js "${dirProjectMail}"/.*rc "${dirProjectMail}"/package.json .
+			cp "${dirProjectMail}"/MailX.sublime-project ./$1.sublime-project
+			mkdir ./design ./sources
+			find . -name ".DS_Store" -type f -delete
+			find ./dev -type d -empty -delete
+			perl -pi -w -e "s/MailX/"$1"/g;" ./gruntfile.js
+			perl -pi -w -e "s/MailX/"$1"/g;" ./$1.sublime-project
+			while true; do
+					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+					case $ynnpm in
+							[Yy]*)
+								npm install
+								break
+								;;
+							[Nn]*)
+								break
+								;;
+							*)
+								echo "Please Answer (y)es or (n)o"
+								;;
+					esac
+			done
+			OPTIND=1
+		else
+			echo "Please Enter Project Name"
+	fi
+}
+
 #Watch Current Project with Sass
 function prsass() {
 	if [[ -d dev ]]
@@ -301,7 +341,7 @@ function browsers() {
 				then
 					open -a Google\ Chrome\ Canary
 					open -a Opera\ Next
-					# open -a WebKit
+					open -a WebKit
 					open -a FirefoxNightly
 				else
 					open -a Google\ Chrome
@@ -314,7 +354,7 @@ function browsers() {
 				then
 					open -a Google\ Chrome\ Canary $url
 					open -a Opera\ Next $url
-					# open -a WebKit $url
+					open -a WebKit $url
 					open -a FirefoxNightly $url
 				else
 					open -a Google\ Chrome $url

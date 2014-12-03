@@ -2,9 +2,24 @@
 function propn() {
 	if [[ -n "$1" ]]
 		then
-			cd "${dirProjects}"/$1
+			if [ "$1" == "-s" ]
+				then
+					if [[ -n "$2" ]]
+						then
+							cd $dirProjects/$2
+							open -a "Sublime Text" $2.sublime-project
+						else
+							cd $dirProjects
+					fi
+				else
+					cd $dirProjects/$1
+					if [ "$2" == "-s" ]
+						then
+							open -a "Sublime Text" $1.sublime-project
+					fi
+			fi
 		else
-			cd "${dirProjects}"
+			cd $dirProjects
 	fi
 }
 
@@ -12,35 +27,63 @@ function propn() {
 function prstp() {
 	if [[ -n "$1" ]]
 		then
-			echo "Setting Up Project $1"
-			propn
-			if [[ ! -d $1 ]]
+			remoteFlag=false
+			if [ "$1" == "-r" ]
 				then
-					mkdir $1
+					remoteFlag=true
+					if [[ -n "$2" ]]
+						then
+							projectName=$2
+						else
+							echo "Please Enter Project Name"
+							exit
+					fi
+				else
+					projectName=$1
+					if [ "$2" == "-r" ]
+						then
+							remoteFlag=true
+					fi
 			fi
-			cd $1
-			cp -R "${dirProjectWeb}"/dev .
-			cp "${dirProjectWeb}"/gruntfile.js "${dirProjectWeb}"/.*rc "${dirProjectWeb}"/package.json .
-			cp "${dirProjectWeb}"/TemplateX.sublime-project ./$1.sublime-project
+			echo "Setting Up Project $projectName"
+			propn
+			if [[ ! -d $projectName ]]
+				then
+					mkdir $projectName
+			fi
+			if $remoteFlag
+				then
+					git clone $remoteProjectWeb $projectName
+					cd $projectName
+					rm -rf .git
+					rm -rf meta
+					rm *.md
+					mv TemplateX.sublime-project $projectName.sublime-project
+				else
+					cd $projectName
+					cp -R $dirProjectWeb/dev .
+					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/.*rc $dirProjectWeb/package.json .
+					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
+			fi
 			mkdir ./meta ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
-			perl -pi -w -e "s/TemplateX/"$1"/g;" ./gruntfile.js
-			perl -pi -w -e "s/TemplateX/"$1"/g;" ./$1.sublime-project
+			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./$projectName.sublime-project
 			while true; do
-					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
-					case $ynnpm in
-							[Yy]*)
-								npm install
-								break
-								;;
-							[Nn]*)
-								break
-								;;
-							*)
-								echo "Please Answer (y)es or (n)o"
-								;;
-					esac
+				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+				case $ynnpm in
+						[Yy]*)
+							npm install
+							break
+							;;
+						[Nn]*)
+							break
+							;;
+						*)
+							echo "Please Answer (y)es or (n)o"
+							;;
+				esac
 			done
 			OPTIND=1
 		else
@@ -58,10 +101,10 @@ function prgsstp() {
 				then
 					mkdir GoodSellerTemplates/template$1
 			fi
-			cd "${dirProjects}"/GoodSellerTemplates/template$1
-			cp -R "${dirProjects}"/GoodSellerTemplates/templateBase/dev .
-			cp "${dirProjects}"/GoodSellerTemplates/templateBase/gruntfile.js .
-			cp "${dirProjects}"/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$1.sublime-project
+			cd $dirProjects/GoodSellerTemplates/template$1
+			cp -R $dirProjects/GoodSellerTemplates/templateBase/dev .
+			cp $dirProjects/GoodSellerTemplates/templateBase/gruntfile.js .
+			cp $dirProjects/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$1.sublime-project
 			mkdir ./meta ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
@@ -77,41 +120,79 @@ function prgsstp() {
 function apstp() {
 	if [[ -n "$1" ]]
 		then
-			echo "Setting Up App Project $1"
-			propn
-			if [[ ! -d $1 ]]
+			remoteFlag=false
+			if [ "$1" == "-r" ]
 				then
-					mkdir $1
+					remoteFlag=true
+					if [[ -n "$2" ]]
+						then
+							projectName=$2
+							packageName=$3
+						else
+							echo "Please Enter Project Name"
+							exit
+					fi
+				else
+					projectName=$1
+					if [[ -n "$2" ]]
+						then
+							if [ "$2" == "-r" ]
+								then
+									remoteFlag=true
+								else
+									packageName=$2
+									if [ "$3" == "-r" ]
+										then
+											remoteFlag=true
+									fi
+							fi
+					fi
 			fi
-			cd $1
-			cp -R "${dirProjectApp}"/dev .
-			cp "${dirProjectApp}"/gruntfile.js "${dirProjectApp}"/.*rc "${dirProjectApp}"/package.json .
-			cp "${dirProjectApp}"/AppX.sublime-project ./$1.sublime-project
+			echo "Setting Up App Project $projectName"
+			propn
+			if [[ ! -d $projectName ]]
+				then
+					mkdir $projectName
+			fi
+			if $remoteFlag
+				then
+					git clone $remoteProjectApp $projectName
+					cd $projectName
+					rm -rf .git
+					rm -rf meta
+					rm *.md
+					mv AppX.sublime-project $projectName.sublime-project
+				else
+					cd $projectName
+					cp -R $dirProjectApp/dev .
+					cp $dirProjectApp/gruntfile.js $dirProjectApp/.*rc $dirProjectApp/package.json .
+					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
+			fi
 			mkdir ./meta ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
-			perl -pi -w -e "s/AppX/"$1"/g;" ./gruntfile.js
-			perl -pi -w -e "s/AppX/"$1"/g;" ./$1.sublime-project
-			if [[ -n "$2" ]]
+			perl -pi -w -e "s/AppX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/AppX/"$projectName"/g;" ./$projectName.sublime-project
+			if [ "$packageName" != "" ]
 				then
-					perl -pi -w -e "s/appx/"$2"/g;" ./gruntfile.js
+					perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
 				else
-					perl -pi -w -e "s/appx/"$1"/g;" ./gruntfile.js
+					perl -pi -w -e "s/appx/"$projectName"/g;" ./gruntfile.js
 			fi
 			while true; do
-					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
-					case $ynnpm in
-							[Yy]*)
-								npm install
-								break
-								;;
-							[Nn]*)
-								break
-								;;
-							*)
-								echo "Please Answer (y)es or (n)o"
-								;;
-					esac
+				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+				case $ynnpm in
+					[Yy]*)
+						npm install
+						break
+						;;
+					[Nn]*)
+						break
+						;;
+					*)
+						echo "Please Answer (y)es or (n)o"
+						;;
+				esac
 			done
 			OPTIND=1
 		else
@@ -119,39 +200,66 @@ function apstp() {
 	fi
 }
 
-#Setup Web Project
+#Setup Mail Project
 function mlstp() {
 	if [[ -n "$1" ]]
 		then
-			echo "Setting Up Mail Template Project $1"
-			propn
-			if [[ ! -d $1 ]]
+			remoteFlag=false
+			if [ "$1" == "-r" ]
 				then
-					mkdir $1
+					remoteFlag=true
+					if [[ -n "$2" ]]
+						then
+							projectName=$2
+						else
+							echo "Please Enter Project Name"
+							exit
+					fi
+				else
+					projectName=$1
+					if [ "$2" == "-r" ]
+						then
+							remoteFlag=true
+					fi
 			fi
-			cd $1
-			cp -R "${dirProjectMail}"/dev .
-			cp "${dirProjectMail}"/gruntfile.js "${dirProjectMail}"/.*rc "${dirProjectMail}"/package.json .
-			cp "${dirProjectMail}"/MailX.sublime-project ./$1.sublime-project
+			echo "Setting Up Mail Template Project $projectName"
+			propn
+			if [[ ! -d $projectName ]]
+				then
+					mkdir $projectName
+			fi
+			if $remoteFlag
+				then
+					git clone $remoteProjectMail $projectName
+					cd $projectName
+					rm -rf .git
+					rm *.md
+					mv MailX.sublime-project $projectName.sublime-project
+				else
+					cd $projectName
+					cp -R $dirProjectMail/dev .
+					cp $dirProjectMail/gruntfile.js $dirProjectMail/.*rc $dirProjectMail/package.json .
+					cp $dirProjectMail/MailX.sublime-project ./$projectName.sublime-project
+			fi
 			mkdir ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
-			perl -pi -w -e "s/MailX/"$1"/g;" ./gruntfile.js
-			perl -pi -w -e "s/MailX/"$1"/g;" ./$1.sublime-project
+			perl -pi -w -e "s/MailX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/MailX/"$projectName"/g;" ./$projectName.sublime-project
 			while true; do
-					read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
-					case $ynnpm in
-							[Yy]*)
-								npm install
-								break
-								;;
-							[Nn]*)
-								break
-								;;
-							*)
-								echo "Please Answer (y)es or (n)o"
-								;;
-					esac
+				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+				case $ynnpm in
+					[Yy]*)
+						npm install
+						break
+						;;
+					[Nn]*)
+						break
+						;;
+					*)
+						echo "Please Answer (y)es or (n)o"
+						;;
+				esac
 			done
 			OPTIND=1
 		else
@@ -165,7 +273,7 @@ function prsass() {
 		then
 			compass=false
 			while getopts ":c" opt; do
-				case "${opt}" in
+				case $opt in
 					c)
 						compass=true
 						;;
@@ -201,7 +309,7 @@ function prwtch() {
 function prgswtch() {
 	template="Base"
 	while getopts ":t:" opt; do
-		case "${opt}" in
+		case $opt in
 			t)
 				template=$OPTARG
 				;;
@@ -225,7 +333,7 @@ function prbld() {
 	criticalFlag=false
 	builder="grunt"
 	while getopts ":ca" opt; do
-		case "${opt}" in
+		case $opt in
 			c)
 				criticalFlag=true
 				;;
@@ -258,7 +366,7 @@ function prgsbld() {
 	criticalFlag=false
 	template="Base"
 	while getopts ":ct:" opt; do
-		case "${opt}" in
+		case $opt in
 			c)
 				criticalFlag=true
 				;;
@@ -287,7 +395,7 @@ function server() {
 	port=8000
 	dir="dev"
 	while getopts ":d:p:" opt; do
-		case "${opt}" in
+		case $opt in
 			d)
 				dir=$OPTARG
 				;;
@@ -304,8 +412,8 @@ function server() {
 	if [[ -d $dir ]]
 		then
 			cd $dir
-			open "http://localhost:${port}/"
-			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+			open http://localhost:$port/
+			python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' $port
 			cd ..
 		else
 			echo "Nothing to Serve / Missing Directory"
@@ -315,18 +423,18 @@ function server() {
 #Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)
 function browsers() {
 	nightlyFlag=false
-	url="http://localhost:8000/"
+	url=http://localhost:8000/
 	emptyFlag=false
 	while getopts ":neu:" opt; do
-		case "${opt}" in
+		case $opt in
 			n)
 				nightlyFlag=true
 				;;
-			u)
-				url=$OPTARG
-				;;
 			e)
 				emptyFlag=true
+				;;
+			u)
+				url=$OPTARG
 				;;
 			\?)
 				echo "Invalid Parameters"
@@ -339,12 +447,12 @@ function browsers() {
 		then
 			if $nightlyFlag
 				then
-					open -a Google\ Chrome\ Canary
-					open -a Opera\ Next
+					open -a "Google Chrome Canary"
+					open -a "Opera Next"
 					open -a WebKit
 					open -a FirefoxNightly
 				else
-					open -a Google\ Chrome
+					open -a "Google Chrome"
 					open -a Opera
 					open -a Safari
 					open -a Firefox
@@ -352,12 +460,12 @@ function browsers() {
 		else
 			if $nightlyFlag
 				then
-					open -a Google\ Chrome\ Canary $url
-					open -a Opera\ Next $url
+					open -a "Google Chrome Canary" $url
+					open -a "Opera Next" $url
 					open -a WebKit $url
 					open -a FirefoxNightly $url
 				else
-					open -a Google\ Chrome $url
+					open -a "Google Chrome" $url
 					open -a Opera $url
 					open -a Safari $url
 					open -a Firefox $url

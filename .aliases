@@ -1,6 +1,6 @@
 #Navigation Aliases & Variables
-export dirTemp=~/Temp
 export dirProjects=~/Projects
+export dirTemp=~/Temp
 export dirProjectWeb="${dirProjects}"/TemplateX
 export dirProjectApp="${dirProjects}"/AppX
 export dirProjectMail="${dirProjects}"/MailX
@@ -8,6 +8,12 @@ alias tx="propn TemplateX"
 alias ax="propn AppX"
 alias mx="propn MailX"
 alias tmp="cd ${dirTemp}"
+
+#GitHub Aliases & Variables
+export remoteHome=https://github.com/uncleF
+export remoteProjectWeb="${remoteHome}"/TemplateX.git
+export remoteProjectApp="${remoteHome}"/AppX.git
+export remoteProjectMail="${remoteHome}"/MailX.git
 
 #Build Aliases & Variables
 export buildProperties="${dirProjects}"/antBuild.properties

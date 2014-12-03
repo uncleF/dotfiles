@@ -12,4 +12,6 @@ function parse_git_branch() {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
-PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[$MAGENTA\]\u \[$WHITE\]at \[$BLUE\]\h \[$WHITE\]in \[${GREEN}\]\w \[${GREEN}\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"on \")\[$YELLOW\]\$(parse_git_branch) \[$WHITE\]\n\$ "
+# PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[$MAGENTA\]\u \[$WHITE\]at \[$BLUE\]\h \[$WHITE\]in \[${GREEN}\]\w \[${GREEN}\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"on \")\[$YELLOW\]\$(parse_git_branch) \[$WHITE\]\n\$ "
+
+PS1="\[\e]2;$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[${GREEN}\]\w \[${GREEN}\]\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"on \")\[$YELLOW\]\$(parse_git_branch) \[$WHITE\]\n\$ "

@@ -56,19 +56,20 @@ function prstp() {
 					git clone $remoteProjectWeb $projectName
 					cd $projectName
 					rm -rf .git
-					rm -rf meta
 					rm *.md
 					mv TemplateX.sublime-project $projectName.sublime-project
 				else
 					cd $projectName
-					cp -R $dirProjectWeb/dev .
-					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/.*rc $dirProjectWeb/package.json .
+					cp -R $dirProjectWeb/dev $dirProjectWeb/meta .
+					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*rc .
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
-			mkdir ./meta ./design ./sources
+			mkdir ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
+			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./$projectName.sublime-project
 			while true; do
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
@@ -159,19 +160,20 @@ function apstp() {
 					git clone $remoteProjectApp $projectName
 					cd $projectName
 					rm -rf .git
-					rm -rf meta
 					rm *.md
 					mv AppX.sublime-project $projectName.sublime-project
 				else
 					cd $projectName
-					cp -R $dirProjectApp/dev .
-					cp $dirProjectApp/gruntfile.js $dirProjectApp/.*rc $dirProjectApp/package.json .
+					cp -R $dirProjectApp/dev $dirProjectWeb/meta .
+					cp $dirProjectApp/gruntfile.js $dirProjectApp/package.json $dirProjectWeb/backstop.json $dirProjectApp/.*rc .
 					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
-			mkdir ./meta ./design ./sources
+			mkdir ./design ./sources
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
+			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/AppX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./$projectName.sublime-project
 			if [ "$packageName" != "" ]
 				then

@@ -5,8 +5,11 @@ export dirProjectWeb="${dirProjects}"/TemplateX
 export dirProjectApp="${dirProjects}"/AppX
 export dirProjectMail="${dirProjects}"/MailX
 alias tx="propn TemplateX"
+alias txs="propn TemplateX -s"
 alias ax="propn AppX"
+alias axs="propn AppX -s"
 alias mx="propn MailX"
+alias mxs="propn MailX -s"
 alias tmp="cd ${dirTemp}"
 
 #GitHub Aliases & Variables

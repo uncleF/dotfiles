@@ -61,7 +61,7 @@ function prstp() {
 				else
 					cd $projectName
 					cp -R $dirProjectWeb/dev $dirProjectWeb/meta .
-					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*rc .
+					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*rc $dirProjectWeb/.editorconfig .
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -165,7 +165,7 @@ function apstp() {
 				else
 					cd $projectName
 					cp -R $dirProjectApp/dev $dirProjectWeb/meta .
-					cp $dirProjectApp/gruntfile.js $dirProjectApp/package.json $dirProjectWeb/backstop.json $dirProjectApp/.*rc .
+					cp $dirProjectApp/gruntfile.js $dirProjectApp/package.json $dirProjectWeb/backstop.json $dirProjectApp/.*rc $dirProjectApp/.editorconfig .
 					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -240,7 +240,7 @@ function mlstp() {
 				else
 					cd $projectName
 					cp -R $dirProjectMail/dev .
-					cp $dirProjectMail/gruntfile.js $dirProjectMail/.*rc $dirProjectMail/package.json .
+					cp $dirProjectMail/gruntfile.js $dirProjectMail/.*rc $dirProjectMail/package.json $dirProjectMail/.editorconfig .
 					cp $dirProjectMail/MailX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources

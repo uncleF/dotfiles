@@ -135,17 +135,14 @@ function apstp() {
 					fi
 				else
 					projectName=$1
-					if [[ -n "$2" ]]
+					if [ "$2" == "-r" ]
 						then
-							if [ "$2" == "-r" ]
+							remoteFlag=true
+						else
+							packageName=$2
+							if [ "$3" == "-r" ]
 								then
 									remoteFlag=true
-								else
-									packageName=$2
-									if [ "$3" == "-r" ]
-										then
-											remoteFlag=true
-									fi
 							fi
 					fi
 			fi
@@ -164,8 +161,8 @@ function apstp() {
 					mv AppX.sublime-project $projectName.sublime-project
 				else
 					cd $projectName
-					cp -R $dirProjectApp/dev $dirProjectWeb/meta .
-					cp $dirProjectApp/gruntfile.js $dirProjectApp/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*.yml $dirProjectApp/.*rc $dirProjectApp/.editorconfig .
+					cp -R $dirProjectApp/dev $dirProjectApp/meta .
+					cp $dirProjectApp/gruntfile.js $dirProjectApp/package.json $dirProjectApp/backstop.json $dirProjectApp/.*.yml $dirProjectApp/.*rc $dirProjectApp/.editorconfig .
 					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -240,7 +237,7 @@ function mlstp() {
 				else
 					cd $projectName
 					cp -R $dirProjectMail/dev .
-					cp $dirProjectMail/gruntfile.js $dirProjectMail/package.json $dirProjectWeb/.*.yml $dirProjectMail/.*rc $dirProjectMail/.editorconfig .
+					cp $dirProjectMail/gruntfile.js $dirProjectMail/package.json $dirProjectMail/backstop.json $dirProjectMail/.*.yml $dirProjectMail/.*rc $dirProjectMail/.editorconfig .
 					cp $dirProjectMail/MailX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources

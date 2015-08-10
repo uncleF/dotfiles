@@ -46,6 +46,7 @@ function prstp() {
 					fi
 			fi
 			echo "Setting Up Project $projectName"
+			packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			propn
 			if [[ ! -d $projectName ]]
 				then
@@ -69,8 +70,10 @@ function prstp() {
 			find ./dev -type d -empty -delete
 			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./package.json
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./$projectName.sublime-project
+			perl -pi -w -e "s/templatex/"$packageName"/g;" ./package.json
 			while true; do
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
@@ -147,6 +150,10 @@ function apstp() {
 					fi
 			fi
 			echo "Setting Up App Project $projectName"
+			if [ "$packageName" == "" ]
+				then
+					packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
+			fi
 			propn
 			if [[ ! -d $projectName ]]
 				then
@@ -170,14 +177,11 @@ function apstp() {
 			find ./dev -type d -empty -delete
 			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/AppX/"$projectName"/g;" ./package.json
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./$projectName.sublime-project
-			if [ "$packageName" != "" ]
-				then
-					perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
-				else
-					perl -pi -w -e "s/appx/"$projectName"/g;" ./gruntfile.js
-			fi
+			perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/appx/"$packageName"/g;" ./package.json
 			while true; do
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
@@ -392,7 +396,7 @@ function prgsbld() {
 #Start Local HTTP Server and Serve Current Project (/dev Directory By Default or Some Other if Specified)
 function server() {
 	port=8000
-	dir="dev"
+	dir="build"
 	while getopts ":d:p:" opt; do
 		case $opt in
 			d)

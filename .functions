@@ -23,6 +23,11 @@ function propn() {
 	fi
 }
 
+#Open Current Project in Sublime Text
+function sbl() {
+	open -a "Sublime Text" *.sublime-project
+}
+
 #Setup Web Project
 function prstp() {
 	if [[ -n "$1" ]]

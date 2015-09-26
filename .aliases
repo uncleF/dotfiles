@@ -10,6 +10,8 @@ alias ax="propn AppX"
 alias axs="propn AppX -s"
 alias mx="propn MailX"
 alias mxs="propn MailX -s"
+alias hpt="propn HotPotato"
+alias hpts="propn HotPotato -s"
 alias tmp="cd ${dirTemp}"
 
 #GitHub Aliases & Variables

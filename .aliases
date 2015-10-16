@@ -1,10 +1,18 @@
-#Navigation Aliases & Variables
+#Environment Variables
 export dirProjects=~/Projects
 export dirTemp=~/Temp
 export dirProjectWeb="${dirProjects}"/TemplateX
 export dirProjectApp="${dirProjects}"/AppX
 export dirProjectMail="${dirProjects}"/MailX
 export dirProjectDot="${dirProjects}"/dotfiles
+export remoteHome=https://github.com/uncleF
+export remoteProjectWeb="${remoteHome}"/TemplateX.git
+export remoteProjectApp="${remoteHome}"/AppX.git
+export remoteProjectMail="${remoteHome}"/MailX.git
+export buildProperties="${dirProjects}"/antBuild.properties
+export buildJSON="${dirProjects}"/gruntBuild.json
+
+#Navigation Aliases
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"
 alias ax="propn AppX"
@@ -21,13 +29,3 @@ alias pop=propn
 alias pbd=prbld
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
 alias npmr="rm -rf node_modules && npm cache clear && npm i"
-
-#GitHub Aliases & Variables
-export remoteHome=https://github.com/uncleF
-export remoteProjectWeb="${remoteHome}"/TemplateX.git
-export remoteProjectApp="${remoteHome}"/AppX.git
-export remoteProjectMail="${remoteHome}"/MailX.git
-
-#Build Aliases & Variables
-export buildProperties="${dirProjects}"/antBuild.properties
-export buildJSON="${dirProjects}"/gruntBuild.json

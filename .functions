@@ -66,8 +66,8 @@ function prstp() {
 					mv TemplateX.sublime-project $projectName.sublime-project
 				else
 					cd $projectName
-					cp -R $dirProjectWeb/dev $dirProjectWeb/meta .
-					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*.yml $dirProjectWeb/.*rc $dirProjectWeb/.editorconfig $dirProjectWeb/.gitignore .
+					cp -R $dirProjectWeb/{dev,meta} .
+					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitignore} .
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -173,8 +173,8 @@ function apstp() {
 					mv AppX.sublime-project $projectName.sublime-project
 				else
 					cd $projectName
-					cp -R $dirProjectApp/dev $dirProjectApp/meta .
-					cp $dirProjectApp/gruntfile.js $dirProjectApp/package.json $dirProjectApp/backstop.json $dirProjectApp/.*.yml $dirProjectApp/.*rc $dirProjectApp/.editorconfig .
+					cp -R $dirProjectApp/{dev,meta} .
+					cp $dirProjectApp/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitignore} .
 					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -246,7 +246,7 @@ function mlstp() {
 				else
 					cd $projectName
 					cp -R $dirProjectMail/dev .
-					cp $dirProjectMail/gruntfile.js $dirProjectMail/package.json $dirProjectMail/backstop.json $dirProjectMail/.*.yml $dirProjectMail/.*rc $dirProjectMail/.editorconfig .
+					cp $dirProjectMail/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitignore} .
 					cp $dirProjectMail/MailX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -479,4 +479,10 @@ function browsers() {
 					open -a Firefox $url
 			fi
 	fi
+}
+
+#Copy dotfiles to the Root Directory
+function dupd() {
+	cp $dirProjectDot/{.aliases,.functions,.prompt} ~/
+	. ~/.bashrc
 }

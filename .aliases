@@ -4,15 +4,21 @@ export dirTemp=~/Temp
 export dirProjectWeb="${dirProjects}"/TemplateX
 export dirProjectApp="${dirProjects}"/AppX
 export dirProjectMail="${dirProjects}"/MailX
+export dirProjectDot="${dirProjects}"/dotfiles
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"
 alias ax="propn AppX"
 alias axs="propn AppX -s"
 alias mx="propn MailX"
 alias mxs="propn MailX -s"
-alias hpt="propn HotPotato"
-alias hpts="propn HotPotato -s"
+alias hp="propn HotPotato"
+alias hps="propn HotPotato -s"
 alias tmp="cd ${dirTemp}"
+alias fdr="open ."
+
+# Development Aliases
+alias pop=propn
+alias pbd=prbld
 
 #GitHub Aliases & Variables
 export remoteHome=https://github.com/uncleF

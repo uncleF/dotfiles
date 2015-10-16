@@ -83,7 +83,8 @@ function prstp() {
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
 						[Yy]*)
-							npm install
+							npm cache clear
+							npm i
 							break
 							;;
 						[Nn]*)
@@ -191,7 +192,8 @@ function apstp() {
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
 					[Yy]*)
-						npm install
+						npm cache clear
+						npm i
 						break
 						;;
 					[Nn]*)
@@ -258,7 +260,8 @@ function mlstp() {
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
 					[Yy]*)
-						npm install
+						npm cache clear
+						npm i
 						break
 						;;
 					[Nn]*)
@@ -482,7 +485,7 @@ function browsers() {
 }
 
 #Copy dotfiles to the Root Directory
-function dupd() {
+function dsync() {
 	cp $dirProjectDot/{.aliases,.functions,.prompt} ~/
 	. ~/.bashrc
 }

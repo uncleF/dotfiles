@@ -19,6 +19,8 @@ alias fdr="open ."
 # Development Aliases
 alias pop=propn
 alias pbd=prbld
+alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
+alias npmr="rm -rf node_modules && npm cache clear && npm i"
 
 #GitHub Aliases & Variables
 export remoteHome=https://github.com/uncleF

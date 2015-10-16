@@ -67,7 +67,7 @@ function prstp() {
 				else
 					cd $projectName
 					cp -R $dirProjectWeb/dev $dirProjectWeb/meta .
-					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*.yml $dirProjectWeb/.*rc $dirProjectWeb/.editorconfig .
+					cp $dirProjectWeb/gruntfile.js $dirProjectWeb/package.json $dirProjectWeb/backstop.json $dirProjectWeb/.*.yml $dirProjectWeb/.*rc $dirProjectWeb/.editorconfig $dirProjectWeb/.gitignore .
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources

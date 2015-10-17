@@ -1,6 +1,6 @@
-GREEN=$(tput setaf 2)
-WHITE=$(tput setaf 7)
-YELLOW=$(tput setaf 3)
+green=$(tput setaf 2)
+white=$(tput setaf 7)
+yellow=$(tput setaf 3)
 
 function parse_git_dirty() {
 	[[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo " *"
@@ -10,4 +10,4 @@ function parse_git_branch() {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
 }
 
-PS1="\[$GREEN\]\w \[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"on \")\[$YELLOW\]\$(parse_git_branch) \[$WHITE\]\n\$ "
+PS1="\[$green\]\w \[$white\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"on \")\[$yellow\]\$(parse_git_branch) \[$white\]\n\$ "

@@ -371,28 +371,6 @@ function prbld() {
 	fi
 	find ./build -type d -empty -delete
 }
-
-#Commit Latest Changes
-function prcmt() {
-	message="Project Update"
-	remote="origin"
-	while getopts ":m:r:" opt; do
-		case $opt in
-			m)
-				message=$OPTARG
-				;;
-			r)
-				remote=$OPTARG
-				;;
-			\?)
-				echo "Invalid Parameters"
-				exit
-				;;
-		esac
-	done
-	OPTIND=1
-	git commit -a -m "$message" && git push $remote
-}
  
 #Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
 function prgsbld() {
@@ -421,6 +399,28 @@ function prgsbld() {
 	fi
 	find template$template/build -type d -empty -delete
 	find template$template/template -type d -empty -delete
+}
+
+#Commit and Push Project Changes
+function prcmt() {
+	message="Project Update"
+	remote="origin"
+	while getopts ":m:r:" opt; do
+		case $opt in
+			m)
+				message=$OPTARG
+				;;
+			r)
+				remote=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	git commit -a -m "$message" && git push $remote
 }
 
 #Start Local HTTP Server and Serve Current Project (/dev Directory By Default or Some Other if Specified)

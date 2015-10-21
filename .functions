@@ -372,6 +372,28 @@ function prbld() {
 	find ./build -type d -empty -delete
 }
 
+#Commit Latest Changes
+function prcmt() {
+	message="Project Update"
+	remote="origin"
+	while getopts ":m:r:" opt; do
+		case $opt in
+			m)
+				message=$OPTARG
+				;;
+			r)
+				remote=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	git commit -a -m "$message" && git push $remote
+}
+ 
 #Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
 function prgsbld() {
 	criticalFlag=false

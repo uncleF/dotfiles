@@ -26,6 +26,7 @@ alias fdr="open ."
 
 # Development Aliases
 alias pop=propn
+alias pwt=prwtch
 alias pbd=prbld
 alias pct=prcmt
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"

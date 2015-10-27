@@ -1,17 +1,3 @@
-#Environment Variables
-export dirProjects=~/Projects
-export dirTemp=~/Temp
-export dirProjectWeb="${dirProjects}"/TemplateX
-export dirProjectApp="${dirProjects}"/AppX
-export dirProjectMail="${dirProjects}"/MailX
-export dirProjectDot="${dirProjects}"/dotfiles
-export remoteHome=https://github.com/uncleF
-export remoteProjectWeb="${remoteHome}"/TemplateX.git
-export remoteProjectApp="${remoteHome}"/AppX.git
-export remoteProjectMail="${remoteHome}"/MailX.git
-export buildProperties="${dirProjects}"/antBuild.properties
-export buildJSON="${dirProjects}"/gruntBuild.json
-
 #Navigation Aliases
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"

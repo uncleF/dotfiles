@@ -420,7 +420,7 @@ function prcmt() {
 		esac
 	done
 	OPTIND=1
-	git commit -a -m "$message" && git push $remote
+	git add -A && git commit -a -m "$message" && git push $remote
 }
 
 #Start Local HTTP Server and Serve Current Project (/dev Directory By Default or Some Other if Specified)

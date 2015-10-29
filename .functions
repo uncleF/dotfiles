@@ -1,4 +1,5 @@
 #Open Project
+
 function propn() {
 	if [[ -n "$1" ]]
 		then
@@ -24,11 +25,13 @@ function propn() {
 }
 
 #Open Current Project in Sublime Text
+
 function sbl() {
 	open -a "Sublime Text" *.sublime-project
 }
 
 #Setup Web Project
+
 function prstp() {
 	if [[ -n "$1" ]]
 		then
@@ -62,18 +65,18 @@ function prstp() {
 					git clone $remoteProjectWeb $projectName
 					cd $projectName
 					rm -rf .git
+					rm -rf meta
 					rm *.md
 					mv TemplateX.sublime-project $projectName.sublime-project
 				else
 					cd $projectName
-					cp -R $dirProjectWeb/{dev,meta} .
-					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitignore} .
+					cp -R $dirProjectWeb/dev .
+					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} .
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
-			mkdir ./design ./sources
+			mkdir ./design ./sources ./meta
 			find . -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
-			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./gruntfile.js
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./package.json
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./backstop.json
@@ -102,6 +105,7 @@ function prstp() {
 }
 
 #Setup Good-Seller Template Project
+
 function prgsstp() {
 	if [[ -n "$1" ]]
 		then
@@ -127,6 +131,7 @@ function prgsstp() {
 }
 
 #Setup App Project
+
 function apstp() {
 	if [[ -n "$1" ]]
 		then
@@ -170,6 +175,7 @@ function apstp() {
 					git clone $remoteProjectApp $projectName
 					cd $projectName
 					rm -rf .git
+					rm -rf meta
 					rm *.md
 					mv AppX.sublime-project $projectName.sublime-project
 				else
@@ -211,6 +217,7 @@ function apstp() {
 }
 
 #Setup Mail Project
+
 function mlstp() {
 	if [[ -n "$1" ]]
 		then
@@ -279,6 +286,7 @@ function mlstp() {
 }
 
 #Watch Current Project with Sass
+
 function prsass() {
 	if [[ -d dev ]]
 		then
@@ -307,6 +315,7 @@ function prsass() {
 }
 
 #Watch Current Project with GruntJS watch-project Task
+
 function prwtch() {
 	if [[ -d dev ]]
 		then
@@ -316,7 +325,8 @@ function prwtch() {
 	fi
 }
 
-#Watch Current Project with GruntJS watch-project Task
+#Watch Current Good-Seller Template Project with GruntJS watch-project Task
+
 function prgswtch() {
 	template="Base"
 	while getopts ":t:" opt; do
@@ -340,6 +350,7 @@ function prgswtch() {
 }
 
 #Build Current Project using GruntJS by Default or Apache ANT
+
 function prbld() {
 	criticalFlag=false
 	builder="grunt"
@@ -373,6 +384,7 @@ function prbld() {
 }
  
 #Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
+
 function prgsbld() {
 	criticalFlag=false
 	template="Base"
@@ -402,6 +414,7 @@ function prgsbld() {
 }
 
 #Commit and Push Project Changes
+
 function prcmt() {
 	message="Project Update"
 	remote="origin"
@@ -424,6 +437,7 @@ function prcmt() {
 }
 
 #Start Local HTTP Server and Serve Current Project (/dev Directory By Default or Some Other if Specified)
+
 function server() {
 	port=8000
 	dir="build"
@@ -454,6 +468,7 @@ function server() {
 }
 
 #Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)
+
 function browsers() {
 	nightlyFlag=false
 	url=http://localhost:8000/
@@ -507,12 +522,14 @@ function browsers() {
 }
 
 #Copy dotfiles to the Root Directory
+
 function dsync() {
 	cp $dirProjectDot/{.aliases,.environment,.functions,.prompt} ~/
 	. ~/.bashrc
 }
 
 #Check Remote Repos
+
 function rpscheck() {
 	white=$(tput setaf 7)
 	yellow=$(tput setaf 3)

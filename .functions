@@ -479,8 +479,8 @@ function server() {
 
 function browsers() {
 	nightlyFlag=false
-	url=http://localhost:8000/
 	emptyFlag=false
+	url=http://localhost:8000/
 	while getopts ":neu:" opt; do
 		case $opt in
 			n)
@@ -541,8 +541,7 @@ function dsync() {
 function rpscheck() {
 	white=$(tput setaf 7)
 	yellow=$(tput setaf 3)
-	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2)
-	do
+	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2) do
 	  cd $d/..
 	  printf "${yellow}${PWD##*/}${white}\n"
 	  git fetch origin --dry-run

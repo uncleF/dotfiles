@@ -1,4 +1,5 @@
 #Navigation Aliases
+
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"
 alias ax="propn AppX"
@@ -10,10 +11,11 @@ alias hps="propn HotPotato -s"
 alias tmp="cd ${dirTemp}"
 alias fdr="open ."
 
-# Development Aliases
+#Development Aliases
+
 alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld
 alias pct=prcmt
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
-alias npmr="rm -rf node_modules && npm cache clear && npm i"
+alias npmr="rm ./node_modules -rf && npm cache clear && npm i"

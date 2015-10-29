@@ -1,4 +1,5 @@
 #Environment Variables
+
 export dirProjects=~/Projects
 export dirTemp=~/Temp
 export dirProjectWeb="${dirProjects}"/TemplateX

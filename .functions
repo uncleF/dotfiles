@@ -56,26 +56,29 @@ function prstp() {
 			echo "Setting Up Project $projectName"
 			packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			propn
-			if [[ ! -d $projectName ]]
-				then
-					mkdir $projectName
-			fi
 			if $remoteFlag
 				then
-					git clone $remoteProjectWeb $projectName
-					cd $projectName
-					rm -rf .git
-					rm -rf meta
-					rm *.md
-					mv TemplateX.sublime-project $projectName.sublime-project
+					if hash git 2>/dev/null
+						then
+							git clone $remoteProjectWeb $projectName
+							cd $projectName
+							rm -rf .git
+							rm -rf meta
+							rm ./*.md
+							mv ./TemplateX.sublime-project ./$projectName.sublime-project
+						else
+							echo "Git is not available"
+							exit
+					fi
 				else
+					mkdir $projectName
 					cd $projectName
-					cp -R $dirProjectWeb/dev .
-					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} .
+					cp -R $dirProjectWeb/dev ./
+					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources ./meta
-			find . -name ".DS_Store" -type f -delete
+			find ./ -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./gruntfile.js
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./package.json
@@ -108,22 +111,20 @@ function prstp() {
 
 function prgsstp() {
 	if [[ -n "$1" ]]
+		template=$1
 		then
 			echo "Setting Up Good-Seller Template Project template$1"
 			propn
-			if [[ ! -d GoodSellerTemplates/template$1 ]]
-				then
-					mkdir GoodSellerTemplates/template$1
-			fi
-			cd $dirProjects/GoodSellerTemplates/template$1
+			mkdir GoodSellerTemplates/template$template
+			cd $dirProjects/GoodSellerTemplates/template$template
 			cp -R $dirProjects/GoodSellerTemplates/templateBase/dev .
 			cp $dirProjects/GoodSellerTemplates/templateBase/gruntfile.js .
-			cp $dirProjects/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$1.sublime-project
+			cp $dirProjects/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$template.sublime-project
 			mkdir ./meta ./design ./sources
-			find . -name ".DS_Store" -type f -delete
+			find ./ -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
-			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$1"/g;" ./gruntfile.js
-			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$1"/g;" ./GStemplate$1.sublime-project
+			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$template"/g;" ./gruntfile.js
+			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$template"/g;" ./GStemplate$template.sublime-project
 			cd ..
 		else
 			echo "Please Enter Template Number"
@@ -166,26 +167,28 @@ function apstp() {
 					packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			fi
 			propn
-			if [[ ! -d $projectName ]]
-				then
-					mkdir $projectName
-			fi
 			if $remoteFlag
 				then
-					git clone $remoteProjectApp $projectName
-					cd $projectName
-					rm -rf .git
-					rm -rf meta
-					rm *.md
-					mv AppX.sublime-project $projectName.sublime-project
+					if hash git 2>/dev/null
+						then
+							git clone $remoteProjectApp $projectName
+							cd $projectName
+							rm -rf .git
+							rm ./*.md
+							mv ./AppX.sublime-project ./$projectName.sublime-project
+						else
+							echo "Git is not available"
+							exit
+					fi
 				else
+					mkdir $projectName
 					cd $projectName
-					cp -R $dirProjectApp/{dev,meta} .
-					cp $dirProjectApp/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitignore} .
+					cp -R $dirProjectApp/{dev,meta} ./
+					cp $dirProjectApp/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
-			find . -name ".DS_Store" -type f -delete
+			find ./ -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./gruntfile.js
@@ -241,27 +244,31 @@ function mlstp() {
 			fi
 			echo "Setting Up Mail Template Project $projectName"
 			propn
-			if [[ ! -d $projectName ]]
-				then
-					mkdir $projectName
-			fi
 			if $remoteFlag
 				then
-					git clone $remoteProjectMail $projectName
-					cd $projectName
-					rm -rf .git
-					rm *.md
-					mv MailX.sublime-project $projectName.sublime-project
+					if hash git 2>/dev/null
+						then
+							git clone $remoteProjectMail $projectName
+							cd $projectName
+							rm -rf .git
+							rm ./*.md
+							mv ./MailX.sublime-project ./$projectName.sublime-project
+						else
+							echo "Git is not available"
+							exit
+					fi
 				else
+					mkdir $projectName
 					cd $projectName
-					cp -R $dirProjectMail/dev .
-					cp $dirProjectMail/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitignore} .
+					cp -R $dirProjectMail/dev ./
+					cp $dirProjectMail/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 					cp $dirProjectMail/MailX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
-			find . -name ".DS_Store" -type f -delete
+			find ./ -name ".DS_Store" -type f -delete
 			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./gruntfile.js
+			perl -pi -w -e "s/MailX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./$projectName.sublime-project
 			while true; do
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm

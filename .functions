@@ -74,7 +74,7 @@ function prstp() {
 					mkdir $projectName
 					cd $projectName
 					cp -R $dirProjectWeb/dev ./
-					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
+					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,bower.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources ./meta
@@ -85,6 +85,7 @@ function prstp() {
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./$projectName.sublime-project
 			perl -pi -w -e "s/templatex/"$packageName"/g;" ./package.json
+			perl -pi -w -e "s/templatex/"$packageName"/g;" ./bower.json
 			while true; do
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
@@ -184,7 +185,7 @@ function apstp() {
 					mkdir $projectName
 					cd $projectName
 					cp -R $dirProjectApp/{dev,meta} ./
-					cp $dirProjectApp/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
+					cp $dirProjectApp/{gruntfile.js,package.json,backstop.json,bower.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
 			mkdir ./design ./sources
@@ -197,6 +198,7 @@ function apstp() {
 			perl -pi -w -e "s/AppX/"$projectName"/g;" ./$projectName.sublime-project
 			perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
 			perl -pi -w -e "s/appx/"$packageName"/g;" ./package.json
+			perl -pi -w -e "s/appX/"$projectName"/g;" ./bower.json
 			while true; do
 				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 				case $ynnpm in
@@ -540,9 +542,9 @@ function dsync() {
 function rpscheck() {
 	white=$(tput setaf 7)
 	yellow=$(tput setaf 3)
-	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2) do
-	  cd $d/..
-	  printf "${yellow}${PWD##*/}${white}\n"
-	  git fetch origin --dry-run
+	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
+		cd $d/..
+		printf "${yellow}${PWD##*/}${white}\n"
+		git fetch origin --dry-run
 	done
 }

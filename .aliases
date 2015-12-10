@@ -8,6 +8,8 @@ alias mx="propn MailX"
 alias mxs="propn MailX -s"
 alias hp="propn HotPotato"
 alias hps="propn HotPotato -s"
+alias txp="propn TemplateXPatterns"
+alias txps="propn TemplateXPatterns -s"
 alias tmp="cd ${dirTemp}"
 alias fdr="open ."
 

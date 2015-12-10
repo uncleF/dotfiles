@@ -11,6 +11,6 @@ function prompt_git() {
   return
 }
 
-PS1="\[$green\]\w "
+PS1="\[$green\]\w"
 PS1+="\$(prompt_git \"$white on $yellow\" \"$green\")"
 PS1+="\n\[$white\]\$ "

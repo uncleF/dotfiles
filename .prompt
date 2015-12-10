@@ -2,12 +2,15 @@ green=$(tput setaf 2)
 white=$(tput setaf 7)
 yellow=$(tput setaf 3)
 
-function parse_git_dirty() {
-	[[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo " *"
+function prompt_git() {
+  git rev-parse --is-inside-work-tree &>/dev/null || return
+  branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \ git describe --all --exact-match HEAD 2> /dev/null || \ git rev-parse --short HEAD 2> /dev/null || \ echo '(unknown)')";
+  dirty=$(git diff --no-ext-diff --quiet --ignore-submodules --exit-code || echo -e " *")
+  [ -n "${s}" ] && s=" [${s}]";
+  echo -e "${1}${branchName}${2}$dirty";
+  return
 }
 
-function parse_git_branch() {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
-}
-
-PS1="\[$green\]\w \[$white\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"on \")\[$yellow\]\$(parse_git_branch) \[$white\]\n\$ "
+PS1="\[$green\]\w "
+PS1+="\$(prompt_git \"$white on $yellow\" \"$green\")"
+PS1+="\n\[$white\]\$ "

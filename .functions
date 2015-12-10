@@ -1,3 +1,11 @@
+#Create New Directory and Enter it
+
+function md() {
+	mkdir -p "$@" && cd "$@"
+}
+
+
+
 #Open Project
 
 function propn() {
@@ -24,11 +32,15 @@ function propn() {
 	fi
 }
 
+
+
 #Open Current Project in Sublime Text
 
 function sbl() {
 	open -a "Sublime Text" *.sublime-project
 }
+
+
 
 #Setup Web Project
 
@@ -108,6 +120,8 @@ function prstp() {
 	fi
 }
 
+
+
 #Setup Good-Seller Template Project
 
 function prgsstp() {
@@ -132,7 +146,9 @@ function prgsstp() {
 	fi
 }
 
-#Setup App Project
+
+
+#Setup WebApp Project
 
 function apstp() {
 	if [[ -n "$1" ]]
@@ -221,7 +237,9 @@ function apstp() {
 	fi
 }
 
-#Setup Mail Project
+
+
+#Setup Mail Template Project
 
 function mlstp() {
 	if [[ -n "$1" ]]
@@ -294,6 +312,8 @@ function mlstp() {
 	fi
 }
 
+
+
 #Watch Current Project with Sass
 
 function prsass() {
@@ -323,6 +343,8 @@ function prsass() {
 	fi
 }
 
+
+
 #Watch Current Project with GruntJS watch-project Task
 
 function prwtch() {
@@ -333,6 +355,8 @@ function prwtch() {
 			echo "Nothing to Watch"
 	fi
 }
+
+
 
 #Watch Current Good-Seller Template Project with GruntJS watch-project Task
 
@@ -357,6 +381,8 @@ function prgswtch() {
 			echo "Nothing to Watch"
 	fi
 }
+
+
 
 #Build Current Project using GruntJS by Default or Apache ANT
 
@@ -392,6 +418,8 @@ function prbld() {
 	find ./build -type d -empty -delete
 }
  
+
+
 #Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
 
 function prgsbld() {
@@ -422,6 +450,8 @@ function prgsbld() {
 	find template$template/template -type d -empty -delete
 }
 
+
+
 #Commit and Push Project Changes
 
 function prcmt() {
@@ -444,6 +474,8 @@ function prcmt() {
 	OPTIND=1
 	git add -A && git commit -a -m "$message" && git push $remote
 }
+
+
 
 #Start Local HTTP Server and Serve Current Project (/build Directory By Default or Some Other if Specified)
 
@@ -475,6 +507,8 @@ function server() {
 			echo "Nothing to Serve / Missing Directory"
 	fi
 }
+
+
 
 #Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)
 
@@ -530,12 +564,16 @@ function browsers() {
 	fi
 }
 
+
+
 #Copy dotfiles to the Root Directory
 
 function dsync() {
 	cp $dirProjectDot/{.aliases,.environment,.functions,.prompt} ~/
 	. ~/.bashrc
 }
+
+
 
 #Check Remote Repos
 

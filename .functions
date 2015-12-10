@@ -1,6 +1,6 @@
 #Create New Directory and Enter it
 
-function md() {
+function mdc() {
 	mkdir -p "$@" && cd "$@"
 }
 

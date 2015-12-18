@@ -103,7 +103,7 @@ function prstp() {
 				case $ynnpm in
 						[Yy]*)
 							npm cache clear
-							npm i
+							npm i --save-dev
 							break
 							;;
 						[Nn]*)
@@ -220,7 +220,7 @@ function apstp() {
 				case $ynnpm in
 					[Yy]*)
 						npm cache clear
-						npm i
+						npm i --save-dev
 						break
 						;;
 					[Nn]*)
@@ -295,7 +295,7 @@ function mlstp() {
 				case $ynnpm in
 					[Yy]*)
 						npm cache clear
-						npm i
+						npm i --save-dev
 						break
 						;;
 					[Nn]*)

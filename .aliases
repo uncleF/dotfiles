@@ -20,4 +20,4 @@ alias pwt=prwtch
 alias pbd=prbld
 alias pct=prcmt
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
-alias npmr="rm ./node_modules -rf && npm cache clear && npm i"
+alias npmr="rm -rf ./node_modules && npm cache clear && npm i"

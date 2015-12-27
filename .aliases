@@ -15,6 +15,7 @@ alias fdr="open ."
 
 #Development Aliases
 
+alias pst=prstp
 alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld

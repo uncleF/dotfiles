@@ -42,6 +42,59 @@ function sbl() {
 
 
 
+#Setup Utilities
+
+function uprcopy() {
+	mkdir $1
+	cd $1
+	cp -R $2/dev ./
+	cp $2/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
+	cp $2/$3.sublime-project ./$1.sublime-project	
+}
+
+function uprremote() {
+	git clone $2 $1
+	cd $1
+	rm -rf .git
+	rm ./*.md
+	mv ./$3.sublime-project ./$1.sublime-project	
+}
+
+function uprcleanup() {
+	find ./ -name ".DS_Store" -type f -delete
+	find ./dev -type d -empty -delete
+}
+
+function uprreplace() {
+	perl -pi -w -e "s/$2/"$1"/g;" ./gruntfile.js
+	perl -pi -w -e "s/$2/"$1"/g;" ./package.json
+	perl -pi -w -e "s/$2/"$1"/g;" ./backstop.json
+	perl -pi -w -e "s/$2/"$1"/g;" ./$1.sublime-project
+	perl -pi -w -e "s/$4/"$3"/g;" ./package.json
+}
+
+function uprnpm() {
+	while true; do
+		read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
+		case $ynnpm in
+				[Yy]*)
+					npm cache clear
+					npm i --save-dev
+					break
+					;;
+				[Nn]*)
+					break
+					;;
+				*)
+					echo "Please Answer (y)es or (n)o"
+					;;
+		esac
+	done
+	OPTIND=1
+}
+
+
+
 #Setup Web Project
 
 function prstp() {
@@ -72,76 +125,22 @@ function prstp() {
 				then
 					if hash git 2>/dev/null
 						then
-							git clone $remoteProjectWeb $projectName
-							cd $projectName
-							rm -rf .git
+							uprremote $projectName $remoteProjectWeb TemplateX
 							rm -rf meta
-							rm ./*.md
-							mv ./TemplateX.sublime-project ./$projectName.sublime-project
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
-					mkdir $projectName
-					cd $projectName
+					uprcopy $projectName $dirProjectWeb TemplateX
 					cp -R $dirProjectWeb/dev ./
-					cp $dirProjectWeb/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
-					cp $dirProjectWeb/TemplateX.sublime-project ./$projectName.sublime-project
 			fi
+			uprcleanup
 			mkdir ./design ./sources ./meta
-			find ./ -name ".DS_Store" -type f -delete
-			find ./dev -type d -empty -delete
-			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./gruntfile.js
-			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./package.json
-			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./backstop.json
-			perl -pi -w -e "s/TemplateX/"$projectName"/g;" ./$projectName.sublime-project
-			perl -pi -w -e "s/templatex/"$packageName"/g;" ./package.json
-			while true; do
-				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
-				case $ynnpm in
-						[Yy]*)
-							npm cache clear
-							npm i --save-dev
-							break
-							;;
-						[Nn]*)
-							break
-							;;
-						*)
-							echo "Please Answer (y)es or (n)o"
-							;;
-				esac
-			done
-			OPTIND=1
+			uprreplace $projectName TemplateX $packageName templatex
+			uprnpm
 		else
 			echo "Please Enter Project Name"
-	fi
-}
-
-
-
-#Setup Good-Seller Template Project
-
-function prgsstp() {
-	if [[ -n "$1" ]]
-		template=$1
-		then
-			echo "Setting Up Good-Seller Template Project template$1"
-			propn
-			mkdir GoodSellerTemplates/template$template
-			cd $dirProjects/GoodSellerTemplates/template$template
-			cp -R $dirProjects/GoodSellerTemplates/templateBase/dev .
-			cp $dirProjects/GoodSellerTemplates/templateBase/gruntfile.js .
-			cp $dirProjects/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$template.sublime-project
-			mkdir ./meta ./design ./sources
-			find ./ -name ".DS_Store" -type f -delete
-			find ./dev -type d -empty -delete
-			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$template"/g;" ./gruntfile.js
-			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$template"/g;" ./GStemplate$template.sublime-project
-			cd ..
-		else
-			echo "Please Enter Template Number"
 	fi
 }
 
@@ -187,49 +186,21 @@ function apstp() {
 				then
 					if hash git 2>/dev/null
 						then
-							git clone $remoteProjectApp $projectName
-							cd $projectName
-							rm -rf .git
-							rm ./*.md
-							mv ./AppX.sublime-project ./$projectName.sublime-project
+							uprremote $projectName $remoteProjectApp AppX
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
-					mkdir $projectName
-					cd $projectName
+					uprcopy $projectName $dirProjectApp AppX
 					cp -R $dirProjectApp/{dev,meta} ./
-					cp $dirProjectApp/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
-					cp $dirProjectApp/AppX.sublime-project ./$projectName.sublime-project
 			fi
+			uprcleanup
 			mkdir ./design ./sources
-			find ./ -name ".DS_Store" -type f -delete
-			find ./dev -type d -empty -delete
 			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
-			perl -pi -w -e "s/AppX/"$projectName"/g;" ./gruntfile.js
-			perl -pi -w -e "s/AppX/"$projectName"/g;" ./package.json
-			perl -pi -w -e "s/AppX/"$projectName"/g;" ./backstop.json
-			perl -pi -w -e "s/AppX/"$projectName"/g;" ./$projectName.sublime-project
+			uprreplace $projectName AppX $packageName appx
 			perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
-			perl -pi -w -e "s/appx/"$packageName"/g;" ./package.json
-			while true; do
-				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
-				case $ynnpm in
-					[Yy]*)
-						npm cache clear
-						npm i --save-dev
-						break
-						;;
-					[Nn]*)
-						break
-						;;
-					*)
-						echo "Please Answer (y)es or (n)o"
-						;;
-				esac
-			done
-			OPTIND=1
+			uprnpm
 		else
 			echo "Please Enter Project and JavaScript Package Names"
 	fi
@@ -266,47 +237,48 @@ function mlstp() {
 				then
 					if hash git 2>/dev/null
 						then
-							git clone $remoteProjectMail $projectName
-							cd $projectName
-							rm -rf .git
-							rm ./*.md
-							mv ./MailX.sublime-project ./$projectName.sublime-project
+							uprremote $projectName $remoteProjectMail MailX
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
-					mkdir $projectName
-					cd $projectName
-					cp -R $dirProjectMail/dev ./
-					cp $dirProjectMail/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
-					cp $dirProjectMail/MailX.sublime-project ./$projectName.sublime-project
+					uprcopy $projectName $dirProjectMail MailX
 			fi
+			uprcleanup
 			mkdir ./design ./sources
-			find ./ -name ".DS_Store" -type f -delete
-			find ./dev -type d -empty -delete
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./gruntfile.js
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./$projectName.sublime-project
-			while true; do
-				read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
-				case $ynnpm in
-					[Yy]*)
-						npm cache clear
-						npm i --save-dev
-						break
-						;;
-					[Nn]*)
-						break
-						;;
-					*)
-						echo "Please Answer (y)es or (n)o"
-						;;
-				esac
-			done
-			OPTIND=1
+			uprnpm
 		else
 			echo "Please Enter Project Name"
+	fi
+}
+
+
+
+#Setup Good-Seller Template Project
+
+function prgsstp() {
+	if [[ -n "$1" ]]
+		template=$1
+		then
+			echo "Setting Up Good-Seller Template Project template$1"
+			propn
+			mkdir GoodSellerTemplates/template$template
+			cd $dirProjects/GoodSellerTemplates/template$template
+			cp -R $dirProjects/GoodSellerTemplates/templateBase/dev .
+			cp $dirProjects/GoodSellerTemplates/templateBase/gruntfile.js .
+			cp $dirProjects/GoodSellerTemplates/templateBase/GStemplate.sublime-project ./GStemplate$template.sublime-project
+			mkdir ./meta ./design ./sources
+			find ./ -name ".DS_Store" -type f -delete
+			find ./dev -type d -empty -delete
+			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$template"/g;" ./gruntfile.js
+			perl -pi -w -e "s/GoodSellerTemplates/"GoodSellerTemplate$template"/g;" ./GStemplate$template.sublime-project
+			cd ..
+		else
+			echo "Please Enter Template Number"
 	fi
 }
 

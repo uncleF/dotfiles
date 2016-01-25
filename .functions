@@ -447,6 +447,19 @@ function prcmt() {
 
 
 
+# Update Project Settings
+
+function prupd() {
+	if [[ -d dev ]]
+		then
+			cp $dirProjectWeb/{.*rc,.*.yml,.editorconfig} ./
+		else
+			echo "This is Not a Project Root"
+	fi
+}
+
+
+
 #Start Local HTTP Server and Serve Current Project (/build Directory By Default or Some Other if Specified)
 
 function server() {

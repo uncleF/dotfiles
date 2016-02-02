@@ -450,9 +450,25 @@ function prcmt() {
 # Update Project Settings
 
 function prupd() {
+	project=$dirProjectWeb
+	while getopts ":ma" opt; do
+		case $opt in
+			a)
+				project=$dirProjectApp
+				;;
+			m)
+				project=$dirProjectMail
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
 	if [[ -d dev ]]
 		then
-			cp $dirProjectWeb/{.*rc,.*.yml,.editorconfig} ./
+			cp $project/{.*rc,.*.yml,.editorconfig} ./
 		else
 			echo "This is Not a Project Root"
 	fi

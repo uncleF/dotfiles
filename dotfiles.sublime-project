@@ -6,9 +6,11 @@
 			[
 				"*.sublime-project"
 			],
-			"follow_symlinks": true,
 			"name": "dotfiles",
 			"path": "."
+		},
+		{
+			"path": "/Users/uncleFucka/Temp/pr"
 		}
 	]
 }

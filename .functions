@@ -584,6 +584,7 @@ function dsync() {
 #Check Remote Repos
 
 function rpscheck() {
+	propn
 	white=$(tput setaf 7)
 	yellow=$(tput setaf 3)
 	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do

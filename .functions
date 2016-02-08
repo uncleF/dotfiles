@@ -359,13 +359,17 @@ function prgswtch() {
 function prbld() {
 	criticalFlag=false
 	builder="grunt"
-	while getopts ":ca" opt; do
+	legacy="grunt"
+	while getopts ":cal" opt; do
 		case $opt in
 			c)
 				criticalFlag=true
 				;;
 			a)
 				builder="ant"
+				;;
+			l)
+				legacy=true
 				;;
 			\?)
 				echo "Invalid Parameters"
@@ -385,7 +389,10 @@ function prbld() {
 					grunt build
 			fi
 	fi
-	find ./build -type d -empty -delete
+	if "$legacy"
+		then
+			find ./build -type d -empty -delete
+	fi
 }
  
 

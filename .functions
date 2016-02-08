@@ -357,9 +357,9 @@ function prgswtch() {
 #Build Current Project using GruntJS by Default or Apache ANT
 
 function prbld() {
-	criticalFlag=false
 	builder="grunt"
-	legacy="grunt"
+	criticalFlag=false
+	legacy=false
 	while getopts ":cal" opt; do
 		case $opt in
 			c)

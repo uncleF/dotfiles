@@ -79,7 +79,7 @@ function uprnpm() {
 		case $ynnpm in
 				[Yy]*)
 					npm cache clear
-					npm i --save-dev
+					npm i --save
 					break
 					;;
 				[Nn]*)

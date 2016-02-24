@@ -48,7 +48,7 @@ function uprcopy() {
 	mkdir $1
 	cd $1
 	cp -R $2/{dev,tests} ./
-	cp $2/{gruntfile.js,package.json,backstop.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
+	cp $2/{gruntfile.js,package.json,backstop.json,reminders.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 	cp $2/$3.sublime-project ./$1.sublime-project	
 }
 

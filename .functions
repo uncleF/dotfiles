@@ -47,7 +47,7 @@ function sbl() {
 function uprcopy() {
 	mkdir $1
 	cd $1
-	cp -R $2/{dev,tests} ./
+	cp -R $2/dev ./
 	cp $2/{gruntfile.js,package.json,backstop.json,reminders.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 	cp $2/$3.sublime-project ./$1.sublime-project	
 }
@@ -134,7 +134,7 @@ function prstp() {
 					fi
 				else
 					uprcopy $projectName $dirProjectWeb TemplateX
-					cp -R $dirProjectWeb/dev ./
+					cp -R $dirProjectWeb/tests ./
 			fi
 			uprcleanup
 			mkdir ./design ./sources ./meta
@@ -188,17 +188,17 @@ function apstp() {
 					if hash git 2>/dev/null
 						then
 							uprremote $projectName $remoteProjectApp AppX
+							rm -rf meta
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
 					uprcopy $projectName $dirProjectApp AppX
-					cp -R $dirProjectApp/{dev,meta} ./
+					cp -R $dirProjectApp/tests ./
 			fi
 			uprcleanup
-			mkdir ./design ./sources
-			find ./meta \( -name "*.ico" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.svg" \) -type f -delete
+			mkdir ./design ./sources ./meta
 			uprreplace $projectName AppX $packageName appx
 			perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
 			uprnpm
@@ -255,6 +255,69 @@ function mlstp() {
 		else
 			echo "Please Enter Project Name"
 	fi
+}
+
+
+
+#Setup Node.js App Project
+
+function ndstp() {
+	if [[ -n "$1" ]]
+		then
+			remoteFlag=false
+			if [ "$1" == "-r" ]
+				then
+					remoteFlag=true
+					if [[ -n "$2" ]]
+						then
+							projectName=$2
+							packageName=$3
+						else
+							echo "Please Enter Project Name"
+							exit
+					fi
+				else
+					projectName=$1
+					if [ "$2" == "-r" ]
+						then
+							remoteFlag=true
+						else
+							packageName=$2
+							if [ "$3" == "-r" ]
+								then
+									remoteFlag=true
+							fi
+					fi
+			fi
+			echo "Setting Up Node App Project $projectName"
+			if [ "$packageName" == "" ]
+				then
+					packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
+			fi
+			propn
+			if $remoteFlag
+				then
+					if hash git 2>/dev/null
+						then
+							uprremote $projectName $remoteProjectNode AppXN
+						else
+							echo "Git is not available"
+							exit
+					fi
+				else
+					mkdir $projectName
+					cd $projectName
+					cp -R $dirProjectNode/{app,tests} ./
+					cp $dirProjectNode/{package.json,.*rc,.editorconfig,.gitattributes,.gitignore,.npmignore} ./
+					cp $dirProjectNode/AppXN.sublime-project ./$projectName.sublime-project	
+			fi
+			perl -pi -w -e "s/AppXN/"$projectName"/g;" ./package.json
+			perl -pi -w -e "s/AppXN/"$projectName"/g;" ./$projectName.sublime-project
+			perl -pi -w -e "s/appxn/"$packageName"/g;" ./package.json
+			uprnpm
+		else
+			echo "Please Enter Project and JavaScript Package Names"
+	fi	
 }
 
 

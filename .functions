@@ -6,6 +6,14 @@ function mdc() {
 
 
 
+#Output Project Structure
+
+function prt() {
+	tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst -L ${1:-3} -aC $2
+}
+
+
+
 #Open Project
 
 function propn() {

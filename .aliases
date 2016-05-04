@@ -24,3 +24,6 @@ alias pbd=prbld
 alias pct=prcmt
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
 alias npmr="rm -rf ./node_modules && npm cache clear && npm i --save-dev"
+
+alias pctu='prcmt -m "Project Update"'
+alias pctf='prcmt -m "Project Fixes"'

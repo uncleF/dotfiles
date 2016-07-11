@@ -520,7 +520,7 @@ function prcmt() {
 		esac
 	done
 	OPTIND=1
-	git pull && git add -A && git commit -a -m "$message" && git push $remote
+	git add -A && git commit -a -m "$message" && git pull && git push $remote
 }
 
 

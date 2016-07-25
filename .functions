@@ -50,6 +50,15 @@ function sbl() {
 
 
 
+#Open Project in Sublime Text and Watch it
+
+function pope() {
+	propn $1 -s
+	prwtch
+}
+
+
+
 #Setup Utilities
 
 function uprcopy() {

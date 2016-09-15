@@ -1,4 +1,4 @@
-#Environment Variables
+# Environment Variables
 
 export dirProjects=~/Projects
 export dirTemp=~/Temp

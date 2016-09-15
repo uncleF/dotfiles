@@ -1,4 +1,4 @@
-#Create New Directory and Enter it
+# Create New Directory and Enter it
 
 function mdc() {
 	mkdir -p "$@" && cd "$@"
@@ -6,7 +6,7 @@ function mdc() {
 
 
 
-#Output Project Structure
+# Output Project Structure
 
 function prt() {
 	tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst -L ${1:-3} -aC $2
@@ -14,7 +14,7 @@ function prt() {
 
 
 
-#Open Project
+# Open Project
 
 function propn() {
 	if [[ -n "$1" ]]
@@ -42,7 +42,7 @@ function propn() {
 
 
 
-#Open Current Project in Sublime Text
+# Open Current Project in Sublime Text
 
 function sbl() {
 	open -a "Sublime Text" *.sublime-project
@@ -50,7 +50,7 @@ function sbl() {
 
 
 
-#Open Project in Sublime Text and Watch it
+# Open Project in Sublime Text and Watch it
 
 function pope() {
 	propn $1 -s
@@ -59,7 +59,7 @@ function pope() {
 
 
 
-#Setup Utilities
+# Setup Utilities
 
 function uprcopy() {
 	mkdir $1
@@ -113,7 +113,7 @@ function uprnpm() {
 
 
 
-#Setup Web Project
+# Setup Web Project
 
 function prstp() {
 	if [[ -n "$1" ]]
@@ -164,7 +164,7 @@ function prstp() {
 
 
 
-#Setup WebApp Project
+# Setup WebApp Project
 
 function apstp() {
 	if [[ -n "$1" ]]
@@ -226,7 +226,7 @@ function apstp() {
 
 
 
-#Setup Mail Template Project
+# Setup Mail Template Project
 
 function mlstp() {
 	if [[ -n "$1" ]]
@@ -276,7 +276,7 @@ function mlstp() {
 
 
 
-#Setup Node.js App Project
+# Setup Node.js App Project
 
 function ndstp() {
 	if [[ -n "$1" ]]
@@ -339,7 +339,7 @@ function ndstp() {
 
 
 
-#Setup Good-Seller Template Project
+# Setup Good-Seller Template Project
 
 function prgsstp() {
 	if [[ -n "$1" ]]
@@ -365,7 +365,7 @@ function prgsstp() {
 
 
 
-#Watch Current Project with Sass
+# Watch Current Project with Sass
 
 function prsass() {
 	if [[ -d dev ]]
@@ -396,7 +396,7 @@ function prsass() {
 
 
 
-#Watch Current Project with GruntJS watch-project Task
+# Watch Current Project with GruntJS watch-project Task
 
 function prwtch() {
 	if [[ -d dev ]]
@@ -409,7 +409,7 @@ function prwtch() {
 
 
 
-#Watch Current Good-Seller Template Project with GruntJS watch-project Task
+# Watch Current Good-Seller Template Project with GruntJS watch-project Task
 
 function prgswtch() {
 	template="Base"
@@ -435,7 +435,7 @@ function prgswtch() {
 
 
 
-#Build Current Project using GruntJS by Default or Apache ANT
+# Build Current Project using GruntJS by Default or Apache ANT
 
 function prbld() {
 	builder="grunt"
@@ -478,7 +478,28 @@ function prbld() {
  
 
 
-#Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
+ # Sort Sprites into Corresponding Folders
+
+ function ssrt() {
+ 	folder=sprites
+ 	if [[ -n "$1" ]]
+ 		then
+ 			folder=$1
+ 	fi
+ 	echo "Sorting Sprites"
+ 	folder2x="$folder"@2x
+ 	folder3x="$folder"@3x
+ 	mkdir ./$folder
+ 	mkdir ./$folder2x
+ 	mkdir ./$folder3x
+ 	mv ./{*@3x.png,*@3x.jpg} ./$folder3x/ 2>/dev/null
+ 	mv ./{*@2x.png,*@2x.jpg} ./$folder2x/ 2>/dev/null
+ 	mv ./{*.png,*.jpg,*.svg} ./$folder/ 2>/dev/null
+ 	find ./ -type d -empty -delete -name $folder
+ }
+
+
+# Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT
 
 function prgsbld() {
 	criticalFlag=false
@@ -510,7 +531,7 @@ function prgsbld() {
 
 
 
-#Commit and Push Project Changes
+# Commit and Push Project Changes
 
 function prcmt() {
 	message="Project Update"
@@ -564,7 +585,7 @@ function prupd() {
 
 
 
-#Start Local HTTP Server and Serve Current Project (/build Directory By Default or Some Other if Specified)
+# Start Local HTTP Server and Serve Current Project (/build Directory By Default or Some Other if Specified)
 
 function server() {
 	directory="build"
@@ -597,7 +618,7 @@ function server() {
 
 
 
-#Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)
+# Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)
 
 function browsers() {
 	nightlyFlag=false
@@ -653,7 +674,7 @@ function browsers() {
 
 
 
-#Copy dotfiles to the Root Directory
+# Copy dotfiles to the Root Directory
 
 function dsync() {
 	cp $dirProjectDot/{.aliases,.environment,.functions,.prompt} ~/
@@ -662,7 +683,7 @@ function dsync() {
 
 
 
-#Check Remote Repos
+# Check Remote Repos
 
 function rpscheck() {
 	propn

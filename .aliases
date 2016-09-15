@@ -1,4 +1,4 @@
-#Navigation Aliases
+# Navigation Aliases
 
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"
@@ -21,7 +21,7 @@ alias txpe="pope TemplateXPatterns"
 alias tmp="cd ${dirTemp}"
 alias fdr="open ."
 
-#Development Aliases
+# Development Aliases
 
 alias pst=prstp
 alias pop=propn

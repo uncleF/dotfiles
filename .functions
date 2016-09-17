@@ -377,6 +377,7 @@ function prrnm() {
 					exit
 			fi
 			oldProjectName=${PWD##*/}
+			echo "Renaming Project $oldProjectName"
 			oldPackageName="$(tr [A-Z] [a-z] <<< "$oldProjectName")"
 			newPackageName="$(tr [A-Z] [a-z] <<< "$newProjectName")"
 			mv ./$oldProjectName.sublime-project ./$newProjectName.sublime-project

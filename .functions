@@ -364,6 +364,32 @@ function prgsstp() {
 }
 
 
+# Rename Current Project
+
+function prrnm() {
+	if [[ -d dev ]]
+		then
+			if [[ -n "$1" ]]
+				then
+					newProjectName=$1
+				else
+					echo "Please Enter New Project Name"
+					exit
+			fi
+			oldProjectName=${PWD##*/}
+			oldPackageName="$(tr [A-Z] [a-z] <<< "$oldProjectName")"
+			newPackageName="$(tr [A-Z] [a-z] <<< "$newProjectName")"
+			mv ./$oldProjectName.sublime-project ./$newProjectName.sublime-project
+			uprreplace $newProjectName $oldProjectName $newPackageName $oldPackageName
+			cd ..
+			mv ./$oldProjectName ./$newProjectName
+			cd $newProjectName
+		else
+			echo "This is Not a Project"
+	fi
+}
+
+
 
 # Watch Current Project with Sass
 

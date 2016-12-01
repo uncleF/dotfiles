@@ -468,13 +468,17 @@ function prbld() {
 	builder="grunt"
 	criticalFlag=false
 	legacy=false
+	fast=false
 	while getopts ":cal" opt; do
 		case $opt in
+			a)
+				builder="ant"
+				;;
 			c)
 				criticalFlag=true
 				;;
-			a)
-				builder="ant"
+			l)
+				fast=true
 				;;
 			l)
 				legacy=true
@@ -492,9 +496,19 @@ function prbld() {
 		else
 			if $criticalFlag
 				then
-					grunt build-critical
+					if $fast
+						then
+							grunt build-critical-fast
+						else
+							grunt build-critical
+					fi
 				else
-					grunt build
+					if $fast
+						then
+							grunt build-fast
+						else
+							grunt build
+					fi
 			fi
 	fi
 	if "$legacy"
@@ -502,7 +516,7 @@ function prbld() {
 			find ./build -type d -empty -delete
 	fi
 }
- 
+
 
 
  # Sort Sprites into Corresponding Folders
@@ -514,16 +528,26 @@ function prbld() {
  			folder=$1
  	fi
  	echo "Sorting Sprites"
- 	folder2x="$folder"@2x
- 	folder3x="$folder"@3x
+ 	usptcopy Phone@3x $folder
+ 	usptcopy Phone@2x $folder
+ 	usptcopy Phone $folder
+ 	usptcopy @3x $folder
+ 	usptcopy @2x $folder
  	mkdir ./$folder
- 	mkdir ./$folder2x
- 	mkdir ./$folder3x
- 	mv ./{*@3x.png,*@3x.jpg} ./$folder3x/ 2>/dev/null
- 	mv ./{*@2x.png,*@2x.jpg} ./$folder2x/ 2>/dev/null
  	mv ./{*.png,*.jpg,*.svg} ./$folder/ 2>/dev/null
- 	find ./ -type d -empty -delete -name $folder
+ 	find $folder -type d -empty -delete -name $folder
  }
+
+ # Utility for Copying Sprites
+
+ function usptcopy() {
+ 		if ls ./*$1.* 1> /dev/null 2>&1
+ 			then
+ 			 	mkdir ./$2$1
+ 			 	mv ./{*$1.png,*$1.jpg} ./$2$1/ 2>/dev/null
+ 	 	fi
+ }
+
 
 
 # Build Current Good-Seller Template Project using GruntJS by Default or Apache ANT

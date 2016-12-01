@@ -469,13 +469,13 @@ function prbld() {
 	criticalFlag=false
 	legacy=false
 	fast=false
-	while getopts ":cal" opt; do
+	while getopts ":cafl" opt; do
 		case $opt in
-			a)
-				builder="ant"
-				;;
 			c)
 				criticalFlag=true
+				;;
+			a)
+				builder="ant"
 				;;
 			f)
 				fast=true

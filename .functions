@@ -533,6 +533,9 @@ function prbld() {
  	usptcopy Phone $folder
  	usptcopy @3x $folder
  	usptcopy @2x $folder
+ 	find . -name '*@1x*' | while read f; do
+ 		mv "$f" "${f//@1x/}"
+ 	done
  	mkdir ./$folder
  	mv ./{*.png,*.jpg,*.svg} ./$folder/ 2>/dev/null
  	find $folder -type d -empty -delete -name $folder

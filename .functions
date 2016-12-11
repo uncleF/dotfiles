@@ -86,7 +86,6 @@ function uprcleanup() {
 function uprreplace() {
 	perl -pi -w -e "s/$2/"$1"/g;" ./gruntfile.js
 	perl -pi -w -e "s/$2/"$1"/g;" ./package.json
-	perl -pi -w -e "s/$2/"$1"/g;" ./backstop.json
 	perl -pi -w -e "s/$2/"$1"/g;" ./$1.sublime-project
 	perl -pi -w -e "s/$4/"$3"/g;" ./package.json
 }
@@ -266,7 +265,6 @@ function mlstp() {
 			uprcleanup
 			mkdir ./design ./sources
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./gruntfile.js
-			perl -pi -w -e "s/MailX/"$projectName"/g;" ./backstop.json
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./$projectName.sublime-project
 			uprnpm
 		else

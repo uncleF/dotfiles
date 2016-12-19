@@ -24,6 +24,7 @@ alias fdr="open ."
 # Development Aliases
 
 alias pst=prstp
+alias pstr="prstp -b rutorika"
 alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld

@@ -63,19 +63,25 @@ function pope() {
 
 function uprcopy() {
 	mkdir $1
-	cd $1
+	cd $2
+	original=$(git symbolic-ref --short -q HEAD)
+	git checkout $4 &> /dev/null
+	cd ../$1
 	cp -R $2/dev ./
 	cp -R $2/grunt ./
 	cp $2/{gruntfile.js,package.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
-	cp $2/$3.sublime-project ./$1.sublime-project	
+	cp $2/$3.sublime-project ./$1.sublime-project
+	cd $2
+	git checkout $original &> /dev/null
+	cd ../$1
 }
 
 function uprremote() {
-	git clone $2 $1
+	git clone -b $4 $2 $1
 	cd $1
 	rm -rf .git
 	rm ./*.md
-	mv ./$3.sublime-project ./$1.sublime-project	
+	mv ./$3.sublime-project ./$1.sublime-project
 }
 
 function uprcleanup() {
@@ -118,23 +124,26 @@ function prstp() {
 	if [[ -n "$1" ]]
 		then
 			remoteFlag=false
-			if [ "$1" == "-r" ]
-				then
-					remoteFlag=true
-					if [[ -n "$2" ]]
-						then
-							projectName=$2
-						else
-							echo "Please Enter Project Name"
-							exit
-					fi
-				else
-					projectName=$1
-					if [ "$2" == "-r" ]
-						then
-							remoteFlag=true
-					fi
-			fi
+			branch=master
+			projectName=
+			while getopts ":rb:n:" opt; do
+				case $opt in
+					n)
+						projectName=$OPTARG
+						;;
+					r)
+						remoteFlag=true
+						;;
+					b)
+						branch=$OPTARG
+						;;
+					\?)
+						echo "Invalid Parameters"
+						exit
+						;;
+				esac
+			done
+			OPTIND=1
 			echo "Setting Up Project $projectName"
 			packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			propn
@@ -142,14 +151,14 @@ function prstp() {
 				then
 					if hash git 2>/dev/null
 						then
-							uprremote $projectName $remoteProjectWeb TemplateX
+							uprremote $projectName $remoteProjectWeb TemplateX $branch
 							rm -rf meta
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
-					uprcopy $projectName $dirProjectWeb TemplateX
+					uprcopy $projectName $dirProjectWeb TemplateX $branch
 					cp -R $dirProjectWeb/tests ./
 			fi
 			uprcleanup

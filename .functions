@@ -62,11 +62,12 @@ function pope() {
 # Setup Utilities
 
 function uprcopy() {
-	mkdir $1
 	cd $2
 	original=$(git symbolic-ref --short -q HEAD)
 	git checkout $4 &> /dev/null
-	cd ../$1
+	cd ..
+	mkdir $1
+	cd $1
 	cp -R $2/dev ./
 	cp -R $2/grunt ./
 	cp $2/{gruntfile.js,package.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
@@ -121,29 +122,31 @@ function uprnpm() {
 # Setup Web Project
 
 function prstp() {
-	if [[ -n "$1" ]]
+	remoteFlag=false
+	branch=master
+	projectName=
+	while getopts ":rb:n:" opt; do
+		case $opt in
+			n)
+				projectName=$OPTARG
+				;;
+			r)
+				remoteFlag=true
+				;;
+			b)
+				branch=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	if [ -z $projectName ]
 		then
-			remoteFlag=false
-			branch=master
-			projectName=
-			while getopts ":rb:n:" opt; do
-				case $opt in
-					n)
-						projectName=$OPTARG
-						;;
-					r)
-						remoteFlag=true
-						;;
-					b)
-						branch=$OPTARG
-						;;
-					\?)
-						echo "Invalid Parameters"
-						exit
-						;;
-				esac
-			done
-			OPTIND=1
+			echo "Please Enter Project Name"
+		else
 			echo "Setting Up Project $projectName"
 			packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			propn
@@ -165,8 +168,6 @@ function prstp() {
 			mkdir ./design ./sources ./meta
 			uprreplace $projectName TemplateX $packageName templatex
 			uprnpm
-		else
-			echo "Please Enter Project Name"
 	fi
 }
 
@@ -175,35 +176,37 @@ function prstp() {
 # Setup WebApp Project
 
 function apstp() {
-	if [[ -n "$1" ]]
+	remoteFlag=false
+	branch=master
+	projectName=
+	packageName=
+	while getopts ":rb:n:" opt; do
+		case $opt in
+			n)
+				projectName=$OPTARG
+				;;
+			p)
+				packageName=$OPTARG
+				;;
+			r)
+				remoteFlag=true
+				;;
+			b)
+				branch=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	if [ -z $projectName ]
 		then
-			remoteFlag=false
-			if [ "$1" == "-r" ]
-				then
-					remoteFlag=true
-					if [[ -n "$2" ]]
-						then
-							projectName=$2
-							packageName=$3
-						else
-							echo "Please Enter Project Name"
-							exit
-					fi
-				else
-					projectName=$1
-					if [ "$2" == "-r" ]
-						then
-							remoteFlag=true
-						else
-							packageName=$2
-							if [ "$3" == "-r" ]
-								then
-									remoteFlag=true
-							fi
-					fi
-			fi
+			echo "Please Enter Project and JavaScript Package Names"
+		else
 			echo "Setting Up App Project $projectName"
-			if [ "$packageName" == "" ]
+			if [ -z $packageName ]
 				then
 					packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			fi
@@ -212,14 +215,14 @@ function apstp() {
 				then
 					if hash git 2>/dev/null
 						then
-							uprremote $projectName $remoteProjectApp AppX
+							uprremote $projectName $remoteProjectApp AppX $branch
 							rm -rf meta
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
-					uprcopy $projectName $dirProjectApp AppX
+					uprcopy $projectName $dirProjectApp AppX $branch
 					cp -R $dirProjectApp/tests ./
 			fi
 			uprcleanup
@@ -227,8 +230,6 @@ function apstp() {
 			uprreplace $projectName AppX $packageName appx
 			perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
 			uprnpm
-		else
-			echo "Please Enter Project and JavaScript Package Names"
 	fi
 }
 
@@ -237,47 +238,50 @@ function apstp() {
 # Setup Mail Template Project
 
 function mlstp() {
-	if [[ -n "$1" ]]
+	remoteFlag=false
+	branch=master
+	projectName=
+	while getopts ":rb:n:" opt; do
+		case $opt in
+			n)
+				projectName=$OPTARG
+				;;
+			r)
+				remoteFlag=true
+				;;
+			b)
+				branch=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	if [ -z $projectName ]
 		then
-			remoteFlag=false
-			if [ "$1" == "-r" ]
-				then
-					remoteFlag=true
-					if [[ -n "$2" ]]
-						then
-							projectName=$2
-						else
-							echo "Please Enter Project Name"
-							exit
-					fi
-				else
-					projectName=$1
-					if [ "$2" == "-r" ]
-						then
-							remoteFlag=true
-					fi
-			fi
+			echo "Please Enter Project Name"
+		else
 			echo "Setting Up Mail Template Project $projectName"
 			propn
 			if $remoteFlag
 				then
 					if hash git 2>/dev/null
 						then
-							uprremote $projectName $remoteProjectMail MailX
+							uprremote $projectName $remoteProjectMail MailX $branch
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
-					uprcopy $projectName $dirProjectMail MailX
+					uprcopy $projectName $dirProjectMail MailX $branch
 			fi
 			uprcleanup
 			mkdir ./design ./sources
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./gruntfile.js
 			perl -pi -w -e "s/MailX/"$projectName"/g;" ./$projectName.sublime-project
 			uprnpm
-		else
-			echo "Please Enter Project Name"
 	fi
 }
 
@@ -286,35 +290,37 @@ function mlstp() {
 # Setup Node.js App Project
 
 function ndstp() {
-	if [[ -n "$1" ]]
+	remoteFlag=false
+	branch=master
+	projectName=
+	packageName=
+	while getopts ":rb:n:" opt; do
+		case $opt in
+			n)
+				projectName=$OPTARG
+				;;
+			p)
+				packageName=$OPTARG
+				;;
+			r)
+				remoteFlag=true
+				;;
+			b)
+				branch=$OPTARG
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	if [ -z $projectName ]
 		then
-			remoteFlag=false
-			if [ "$1" == "-r" ]
-				then
-					remoteFlag=true
-					if [[ -n "$2" ]]
-						then
-							projectName=$2
-							packageName=$3
-						else
-							echo "Please Enter Project Name"
-							exit
-					fi
-				else
-					projectName=$1
-					if [ "$2" == "-r" ]
-						then
-							remoteFlag=true
-						else
-							packageName=$2
-							if [ "$3" == "-r" ]
-								then
-									remoteFlag=true
-							fi
-					fi
-			fi
-			echo "Setting Up Node App Project $projectName"
-			if [ "$packageName" == "" ]
+			echo "Please Enter Project and JavaScript Package Names"
+		else
+			echo "Setting Up App Project $projectName"
+			if [ -z $packageName ]
 				then
 					packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
 			fi
@@ -323,24 +329,29 @@ function ndstp() {
 				then
 					if hash git 2>/dev/null
 						then
-							uprremote $projectName $remoteProjectNode AppXN
+							uprremote $projectName $remoteProjectNode AppXN $branch
 						else
 							echo "Git is not available"
 							exit
 					fi
 				else
+					cd $dirProjectNode
+					original=$(git symbolic-ref --short -q HEAD)
+					git checkout $branch &> /dev/null
+					cd ..
 					mkdir $projectName
 					cd $projectName
 					cp -R $dirProjectNode/{app,tests} ./
 					cp $dirProjectNode/{package.json,.*rc,.editorconfig,.gitattributes,.gitignore,.npmignore} ./
 					cp $dirProjectNode/AppXN.sublime-project ./$projectName.sublime-project	
+					cd $dirProjectNode
+					git checkout $original &> /dev/null
+					cd ../$projectName
 			fi
 			perl -pi -w -e "s/AppXN/"$projectName"/g;" ./package.json
 			perl -pi -w -e "s/AppXN/"$projectName"/g;" ./$projectName.sublime-project
 			perl -pi -w -e "s/appxn/"$packageName"/g;" ./package.json
 			uprnpm
-		else
-			echo "Please Enter Project and JavaScript Package Names"
 	fi	
 }
 

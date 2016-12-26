@@ -3,13 +3,11 @@
 export dirProjects=~/Projects
 export dirTemp=~/Temp
 export dirProjectWeb="${dirProjects}"/TemplateX
-export dirProjectApp="${dirProjects}"/AppX
 export dirProjectMail="${dirProjects}"/MailX
 export dirProjectNode="${dirProjects}"/AppXN
 export dirProjectDot="${dirProjects}"/dotfiles
 export remoteHome=https://github.com/uncleF
 export remoteProjectWeb="${remoteHome}"/TemplateX.git
-export remoteProjectApp="${remoteHome}"/AppX.git
 export remoteProjectMail="${remoteHome}"/MailX.git
 export remoteProjectMail="${remoteHome}"/AppXN.git
 export buildProperties="${dirProjects}"/antBuild.properties

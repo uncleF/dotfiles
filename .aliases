@@ -3,9 +3,9 @@
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"
 alias txe="pope TemplateX"
-alias ax="propn AppX"
-alias axs="propn AppX -s"
-alias axe="pope AppX"
+alias ax="tx"
+alias axs="txs"
+alias axe="txe"
 alias mx="propn MailX"
 alias mxs="propn MailX -s"
 alias mxe="pope EailX"
@@ -23,8 +23,8 @@ alias fdr="open ."
 
 # Development Aliases
 
-alias pst="prstp -n "
-alias pstr="prstp -b rutorika -n "
+alias pst="prstp -n"
+alias pstr="prstp -b rutorika -n"
 alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld

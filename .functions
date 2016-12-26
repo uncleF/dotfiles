@@ -173,68 +173,6 @@ function prstp() {
 
 
 
-# Setup WebApp Project
-
-function apstp() {
-	remoteFlag=false
-	branch=master
-	projectName=
-	packageName=
-	while getopts ":rb:n:" opt; do
-		case $opt in
-			n)
-				projectName=$OPTARG
-				;;
-			p)
-				packageName=$OPTARG
-				;;
-			r)
-				remoteFlag=true
-				;;
-			b)
-				branch=$OPTARG
-				;;
-			\?)
-				echo "Invalid Parameters"
-				exit
-				;;
-		esac
-	done
-	OPTIND=1
-	if [ -z $projectName ]
-		then
-			echo "Please Enter Project and JavaScript Package Names"
-		else
-			echo "Setting Up App Project $projectName"
-			if [ -z $packageName ]
-				then
-					packageName="$(tr [A-Z] [a-z] <<< "$projectName")"
-			fi
-			propn
-			if $remoteFlag
-				then
-					if hash git 2>/dev/null
-						then
-							uprremote $projectName $remoteProjectApp AppX $branch
-							rm -rf meta
-						else
-							echo "Git is not available"
-							exit
-					fi
-				else
-					uprcopy $projectName $dirProjectApp AppX $branch
-					cp -R $dirProjectApp/tests ./
-			fi
-			uprcleanup
-			mkdir ./design ./sources ./meta
-			uprreplace $projectName AppX $packageName appx
-			perl -pi -w -e "s/appx/"$packageName"/g;" ./gruntfile.js
-			uprnpm
-	fi
-}
-
-
-
 # Setup Mail Template Project
 
 function mlstp() {

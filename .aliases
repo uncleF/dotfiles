@@ -26,6 +26,7 @@ alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld
 alias pbf="prbld -f"
+alias psv=prsrv
 alias pct=prcmt
 alias prn=prrnm
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"

@@ -626,6 +626,23 @@ function server() {
 	fi
 }
 
+function prsrv() {
+	task="dev"
+	while getopts ":b:" opt; do
+		case $opt in
+			b)
+				task="build"
+				;;
+			\?)
+				echo "Invalid Parameters"
+				exit
+				;;
+		esac
+	done
+	OPTIND=1
+	grunt connect:$task
+}
+
 
 
 # Start All Browsers (Current Stable Releases or Nightly Builds) With an Empty Tab or Go To Specified URL (http://localhost:8000 by Default)

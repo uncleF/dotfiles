@@ -719,6 +719,6 @@ function rpscheck() {
 	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
 		cd $d/..
 		printf "${yellow}${PWD##*/}${white}\n"
-		git fetch origin --dry-run --all
+		git fetch --dry-run --all
 	done
 }

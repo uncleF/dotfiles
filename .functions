@@ -425,7 +425,8 @@ function prbld() {
 	criticalFlag=false
 	legacy=false
 	fast=false
-	while getopts ":cafl" opt; do
+	site=false
+	while getopts ":cafsl" opt; do
 		case $opt in
 			c)
 				criticalFlag=true
@@ -435,6 +436,9 @@ function prbld() {
 				;;
 			f)
 				fast=true
+				;;
+			s)
+				site=true
 				;;
 			l)
 				legacy=true
@@ -452,18 +456,28 @@ function prbld() {
 		else
 			if $criticalFlag
 				then
-					if $fast
+					if $site
 						then
-							grunt build-critical-fast
+							grunt build-critical-site
 						else
-							grunt build-critical
+							if $fast
+								then
+									grunt build-critical-fast
+								else
+									grunt build-critical
+							fi
 					fi
 				else
-					if $fast
+					if $site
 						then
-							grunt build-fast
+							grunt build-site
 						else
-							grunt build
+							if $fast
+								then
+									grunt build-fast
+								else
+									grunt build
+							fi
 					fi
 			fi
 	fi

@@ -26,6 +26,7 @@ alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld
 alias pbf="prbld -f"
+alias pbs="prbld -s"
 alias psv=prsrv
 alias pct=prcmt
 alias prn=prrnm

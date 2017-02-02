@@ -70,7 +70,7 @@ function uprcopy() {
 	cd $1
 	cp -R $2/dev ./
 	cp -R $2/grunt ./
-	cp $2/{gruntfile.js,package.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
+	cp $2/{gruntfile.js,package.json,browserslist,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 	cp $2/$3.sublime-project ./$1.sublime-project
 	cd $2
 	git checkout $original &> /dev/null

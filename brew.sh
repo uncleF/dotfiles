@@ -5,6 +5,8 @@ brew upgrade
 
 # ios-webkit-debug-proxy
 # wget
+# ffmpeg
+# tree
 
 # brew install caskroom/cask/brew-cask
 # brew tap caskroom/versions

@@ -70,7 +70,7 @@ function uprcopy() {
 	cd $1
 	cp -R $2/dev ./
 	cp -R $2/grunt ./
-	cp $2/{gruntfile.js,package.json,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
+	cp $2/{gruntfile.js,package.json,browserslist,.*.yml,.*rc,.editorconfig,.gitattributes,.gitignore} ./
 	cp $2/$3.sublime-project ./$1.sublime-project
 	cd $2
 	git checkout $original &> /dev/null
@@ -425,7 +425,8 @@ function prbld() {
 	criticalFlag=false
 	legacy=false
 	fast=false
-	while getopts ":cafl" opt; do
+	site=false
+	while getopts ":cafsl" opt; do
 		case $opt in
 			c)
 				criticalFlag=true
@@ -435,6 +436,9 @@ function prbld() {
 				;;
 			f)
 				fast=true
+				;;
+			s)
+				site=true
 				;;
 			l)
 				legacy=true
@@ -452,18 +456,28 @@ function prbld() {
 		else
 			if $criticalFlag
 				then
-					if $fast
+					if $site
 						then
-							grunt build-critical-fast
+							grunt build-critical-site
 						else
-							grunt build-critical
+							if $fast
+								then
+									grunt build-critical-fast
+								else
+									grunt build-critical
+							fi
 					fi
 				else
-					if $fast
+					if $site
 						then
-							grunt build-fast
+							grunt build-site
 						else
-							grunt build
+							if $fast
+								then
+									grunt build-fast
+								else
+									grunt build
+							fi
 					fi
 			fi
 	fi
@@ -475,9 +489,9 @@ function prbld() {
 
 
 
- # Sort Sprites into Corresponding Folders
+# Sort Sprites into Corresponding Folders
 
- function ssrt() {
+function ssrt() {
  	folder=sprites
  	if [[ -n "$1" ]]
  		then
@@ -495,17 +509,27 @@ function prbld() {
  	mkdir ./$folder
  	mv ./{*.png,*.jpg,*.svg} ./$folder/ 2>/dev/null
  	find $folder -type d -empty -delete -name $folder
- }
+}
 
- # Utility for Copying Sprites
+# Utility for Copying Sprites
 
- function usptcopy() {
+function usptcopy() {
  		if ls ./*$1.* 1> /dev/null 2>&1
  			then
  			 	mkdir ./$2$1
  			 	mv ./{*$1.png,*$1.jpg} ./$2$1/ 2>/dev/null
  	 	fi
  }
+
+
+
+# Convert JPEGs to progressive JPEGs
+
+function pjpeg() {
+	for image in *.jpg; do
+	  convert -strip -interlace Plane -quality 75 $image $image;
+	done
+}
 
 
 
@@ -719,6 +743,6 @@ function rpscheck() {
 	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
 		cd $d/..
 		printf "${yellow}${PWD##*/}${white}\n"
-		git fetch origin -all --dry-run
+		git fetch --dry-run --all
 	done
 }

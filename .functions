@@ -745,6 +745,7 @@ function rpscheck() {
 		printf "${yellow}${PWD##*/}${white}\n"
 		git fetch --dry-run --all
 	done
+	propn
 }
 
 
@@ -757,4 +758,5 @@ function rpsmaster() {
 		cd $d/..
 		git checkout master
 	done
+	propn
 }

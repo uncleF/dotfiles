@@ -746,3 +746,14 @@ function rpscheck() {
 		git fetch --dry-run --all
 	done
 }
+
+
+
+# Change all Repos to master
+
+function rpsmaster() {
+propn
+for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
+	cd $d/..
+	git checkout master
+done

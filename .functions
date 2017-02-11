@@ -756,6 +756,7 @@ function rpsmaster() {
 	propn
 	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
 		cd $d/..
+		printf "${yellow}${PWD##*/}${white}\n"
 		git checkout master
 	done
 	propn

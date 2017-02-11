@@ -750,7 +750,7 @@ function rpscheck() {
 
 
 
-# Change all Repos to master
+# Change All Repos to master
 
 function rpsmaster() {
 	propn

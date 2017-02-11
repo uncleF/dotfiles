@@ -752,8 +752,9 @@ function rpscheck() {
 # Change all Repos to master
 
 function rpsmaster() {
-propn
-for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
-	cd $d/..
-	git checkout master
-done
+	propn
+	for d in $(find $dirProjects -name "*.git" -type d -maxdepth 2); do
+		cd $d/..
+		git checkout master
+	done
+}

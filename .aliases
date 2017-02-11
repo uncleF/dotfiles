@@ -38,7 +38,7 @@ alias pctf='prcmt -m "Project Fixes"'
 
 # Environment Aliases
 
-alias upbrew = "brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor"
-alias upnpm = "npm-check -g -u; npm install npm -g; npm update -g"
-alias upgem = "sudo gem update --system; sudo gem update --no-document"
-alias upd = "updbrew; updnpm; updgem"
+alias upbrew="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor"
+alias upnpm="npm-check -g -u; npm install npm -g; npm update -g"
+alias upgem="sudo gem update --system; sudo gem update --no-document"
+alias upd="updbrew; updnpm; updgem"

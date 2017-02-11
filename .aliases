@@ -3,20 +3,29 @@
 alias tx="propn TemplateX"
 alias txs="propn TemplateX -s"
 alias txe="pope TemplateX"
-alias mx="propn MailX"
-alias mxs="propn MailX -s"
-alias mxe="pope MailX"
-alias nx="propn AppXN"
-alias nxs="propn AppXN -s"
-alias nxe="pope AppXN"
-alias la="propn LuchaAsteroid"
-alias las="propn LuchaAsteroid -s"
-alias lae="pope LuchaAsteroid"
 alias txp="propn TemplateXPatterns"
 alias txps="propn TemplateXPatterns -s"
 alias txpe="pope TemplateXPatterns"
-alias tmp="cd ${dirTemp}"
+
+alias mx="propn MailX"
+alias mxs="propn MailX -s"
+alias mxe="pope MailX"
+
+alias nx="propn AppXN"
+alias nxs="propn AppXN -s"
+alias nxe="pope AppXN"
+
+alias la="propn LuchaAsteroid"
+alias las="propn LuchaAsteroid -s"
+alias lae="pope LuchaAsteroid"
+
+alias dot="propn dotfiles -s"
+
 alias fdr="open ."
+alias tmp="cd ${dirTemp}"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ...="cd ../../.."
 
 # Development Aliases
 
@@ -30,11 +39,15 @@ alias pbs="prbld -s"
 alias psv=prsrv
 alias pct=prcmt
 alias prn=prrnm
-alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
-alias npmr="rm -rf ./node_modules && npm cache clear && npm i --save-dev"
-
 alias pctu='prcmt -m "Project Update"'
 alias pctf='prcmt -m "Project Fixes"'
+
+alias chm='git checkout master'
+alias chd='git checkout dev'
+
+alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
+
+alias npmr="rm -rf ./node_modules && npm cache clear && npm i --save-dev"
 
 # Environment Aliases
 

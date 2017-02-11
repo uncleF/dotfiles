@@ -1,3 +1,6 @@
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 # Disable Press-and-hold for Keys in Favor of Key Repeat
 
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -22,6 +25,10 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true
 defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
 defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+# Disable the sound effects on boot
+
+sudo nvram SystemAudioVolume=" "
 
 # Copy Command Line Tools
 

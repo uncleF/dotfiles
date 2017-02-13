@@ -22,7 +22,6 @@ alias lae="pope LuchaAsteroid"
 alias dot="propn dotfiles -s"
 
 alias fdr="open ."
-alias ~="cd ~"
 alias tmp="cd ${dirTemp}"
 alias ..="cd .."
 alias ...="cd ../.."

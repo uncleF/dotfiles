@@ -30,7 +30,6 @@ alias ....="cd ../../.."
 # Development Aliases
 
 alias pst="prstp -n"
-alias pstr="prstp -b rutorika -n"
 alias pop=propn
 alias pwt=prwtch
 alias pbd=prbld

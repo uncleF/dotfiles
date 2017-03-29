@@ -102,8 +102,16 @@ function uprnpm() {
 		read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 		case $ynnpm in
 				[Yy]*)
-					npm cache clear
-					npm update --save-dev
+
+
+					if hash yarn 2>/dev/null; then
+			        yarn cache clean
+			        yarn install --dev
+			    else
+			        npm cache clear
+			        npm update --save-dev
+			    fi
+
 					break
 					;;
 				[Nn]*)
@@ -762,4 +770,29 @@ function rpsmaster() {
 		git checkout master
 	done
 	propn
+}
+
+
+
+# Homestead Functions
+
+function hsup() {
+	back=$(pwd)
+	hshm
+	vagrant up
+	cd $back
+}
+
+function hshalt() {
+	back=$(pwd)
+	hshm
+	vagrant halt
+	cd $back
+}
+
+function hsssh() {
+	back=$(pwd)
+	hshm
+	vagrant ssh
+	cd $back
 }

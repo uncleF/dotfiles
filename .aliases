@@ -48,6 +48,8 @@ alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboa
 
 alias npmr="rm -rf ./node_modules && npm cache clear && npm i --save-dev"
 
+alias hshm="cd ${homesteadHome}"
+
 # Environment Aliases
 
 alias upbrew="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor"

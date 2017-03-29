@@ -13,5 +13,7 @@ export remoteProjectWeb="${remoteHome}"/TemplateX.git
 export remoteProjectMail="${remoteHome}"/MailX.git
 export remoteProjectMail="${remoteHome}"/AppXN.git
 
+export homesteadHome=~/Homestead
+
 export buildProperties="${dirProjects}"/antBuild.properties
 export buildJSON="${dirProjects}"/gruntBuild.json

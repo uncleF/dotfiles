@@ -43,6 +43,8 @@ alias pctf='prcmt -m "Project Fixes"'
 
 alias chm='git checkout master'
 alias chd='git checkout dev'
+alias gdf='git diff --color --color-words --abbrev | diff-so-fancy'
+alias glog='git log --graph --oneline --all --decorate'
 
 alias pkey="more ~/.ssh/id_rsa.pub | pbcopy | echo 'Public Key Copied to Clipboard'"
 

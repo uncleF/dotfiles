@@ -102,16 +102,13 @@ function uprnpm() {
 		read -p "Do You Want to Install npm Dependencies (y/n)? " ynnpm
 		case $ynnpm in
 				[Yy]*)
-
-
-					if hash yarn 2>/dev/null; then
-			        yarn cache clean
-			        yarn install --dev
-			    else
+				#  if hash yarn 2>/dev/null; then
+			  #       yarn cache clean
+			  #       yarn install --dev
+			  #   else
 			        npm cache clear
 			        npm update --save-dev
-			    fi
-
+			  #  fi
 					break
 					;;
 				[Nn]*)

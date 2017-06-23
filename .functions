@@ -103,12 +103,13 @@ function uprnpm() {
 		case $ynnpm in
 				[Yy]*)
 				#  if hash yarn 2>/dev/null; then
-			  #       yarn cache clean
+			  #       yarn cache clean --force
 			  #       yarn install --dev
 			  #   else
-			        npm cache clear
+			        npm cache clear --force
 			        npm update --save-dev
 			  #  fi
+			   	npm run txfullinstall
 					break
 					;;
 				[Nn]*)

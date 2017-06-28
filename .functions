@@ -779,20 +779,20 @@ function rpsmaster() {
 function hsup() {
 	back=$(pwd)
 	hshm
-	vagrant up
+	vagrant up "$@"
 	cd $back
 }
 
 function hshalt() {
 	back=$(pwd)
 	hshm
-	vagrant halt
+	vagrant halt "$@"
 	cd $back
 }
 
 function hsssh() {
 	back=$(pwd)
 	hshm
-	vagrant ssh
+	vagrant ssh "$@"
 	cd $back
 }

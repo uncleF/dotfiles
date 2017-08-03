@@ -737,6 +737,7 @@ function browsers() {
 # Copy dotfiles to the Root Directory
 
 function dsync() {
+	printf "Updating Tools\n\n"
 	cp $dirProjectDot/{.aliases,.environment,.functions,.prompt} ~/
 	. ~/.bashrc
 }

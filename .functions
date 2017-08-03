@@ -498,23 +498,26 @@ function prbld() {
 # Sort Sprites into Corresponding Folders
 
 function ssrt() {
- 	folder=sprites
+ 	directory=sprites
  	if [[ -n "$1" ]]
  		then
- 			folder=$1
+ 			directory=$1
  	fi
  	echo "Sorting Sprites"
- 	usptcopy Phone@3x $folder
- 	usptcopy Phone@2x $folder
- 	usptcopy Phone $folder
- 	usptcopy @3x $folder
- 	usptcopy @2x $folder
+ 	usptcopy Phone@3x $directory
+ 	usptcopy Phone@2x $directory
+ 	usptcopy Phone $directory
+ 	usptcopy @3x $directory
+ 	usptcopy @2x $directory
  	find . -name '*@1x*' | while read f; do
  		mv "$f" "${f//@1x/}"
  	done
- 	mkdir ./$folder
- 	mv ./{*.png,*.jpg,*.svg} ./$folder/ 2>/dev/null
- 	find $folder -type d -empty -delete -name $folder
+ 	if [ ! -d $directory ]
+ 		then
+ 			mkdir ./$directory
+ 	fi
+ 	mv ./{*.png,*.jpg,*.svg} ./$directory/ 2>/dev/null
+ 	find $directory -type d -empty -delete -name $directory
 }
 
 # Utility for Copying Sprites

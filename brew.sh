@@ -7,6 +7,7 @@ brew upgrade
 
 brew install ios-webkit-debug-proxy
 brew install ffmpeg --with-libvpx
+brew install guetzli
 brew install imagemagick --with-webp
 brew install node
 brew install rename

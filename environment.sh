@@ -36,7 +36,7 @@ cp ./{.aliases,.environment,.functions,.prompt} ~/
 
 # Load Command Line Tools in the .bashrc
 
-echo -e "\n\n[[ -s ~/.environment ]] && source ~/.environment\n[[ -s ~/.aliases ]] && source ~/.aliases\n[[ -s ~/.functions ]] && source ~/.functions\n[[ -s ~/.prompt ]] && source ~/.prompt" >> ~/.bashrc
+echo "\n\n[[ -s ~/.environment ]] && source ~/.environment\n[[ -s ~/.aliases ]] && source ~/.aliases\n[[ -s ~/.functions ]] && source ~/.functions\n[[ -s ~/.prompt ]] && source ~/.prompt" >> ~/.profile
 
 # Copy Development Tools
 

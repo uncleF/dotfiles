@@ -14,6 +14,18 @@ function prt() {
 
 
 
+# Open Current Project in Sublime Text
+
+function sbl() {
+	if ls *.sublime-project 1> /dev/null 2>&1; then
+	    open -a "Sublime Text" *.sublime-project
+	else
+	    open -a "Sublime Text" ./
+	fi
+}
+
+
+
 # Open Project
 
 function propn() {
@@ -24,7 +36,7 @@ function propn() {
 					if [[ -n "$2" ]]
 						then
 							cd $dirProjects/$2
-							open -a "Sublime Text" $2.sublime-project
+							sbl
 						else
 							cd $dirProjects
 					fi
@@ -32,20 +44,12 @@ function propn() {
 					cd $dirProjects/$1
 					if [ "$2" == "-s" ]
 						then
-							open -a "Sublime Text" $1.sublime-project
+							sbl
 					fi
 			fi
 		else
 			cd $dirProjects
 	fi
-}
-
-
-
-# Open Current Project in Sublime Text
-
-function sbl() {
-	open -a "Sublime Text" *.sublime-project
 }
 
 
@@ -495,6 +499,60 @@ function prbld() {
 
 
 
+# Create New TX-element
+
+function newelm() {
+	if [[ -d dev ]]
+		then
+			name="element"
+			html=false
+			sass=false
+			js=false
+			while getopts ":hsjan:" opt; do
+				case $opt in
+					a)
+						html=true
+						sass=true
+						js=true
+						;;
+					h)
+						html=true
+						;;
+					s)
+						sass=true
+						;;
+					j)
+						js=true
+						;;
+					n)
+						name=$OPTARG
+						;;
+					\?)
+						echo "Invalid Parameters"
+						exit
+						;;
+				esac
+			done
+			OPTIND=1
+			if $html
+				then
+					touch ./dev/res/templates/components/_$name.html
+			fi
+			if $sass
+				then
+					touch ./dev/res/sass/components/_$name.scss
+			fi
+			if $js
+				then
+					touch ./dev/res/js-dev/components/$name.js
+			fi
+		else
+			echo "This isn't a Project"
+	fi
+}
+
+
+
 # Sort Sprites into Corresponding Folders
 
 function ssrt() {
@@ -519,6 +577,8 @@ function ssrt() {
  	mv ./{*.png,*.jpg,*.svg} ./$directory/ 2>/dev/null
  	find $directory -type d -empty -delete -name $directory
 }
+
+
 
 # Utility for Copying Sprites
 

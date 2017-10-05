@@ -40,6 +40,7 @@ alias pct=prcmt
 alias prn=prrnm
 alias pctu='prcmt -m "Project Update"'
 alias pctf='prcmt -m "Project Fixes"'
+alias ne='newelm -n'
 
 alias chm='git checkout master'
 alias chd='git checkout dev'

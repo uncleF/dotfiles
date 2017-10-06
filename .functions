@@ -799,7 +799,14 @@ function browsers() {
 function dsync() {
 	printf "Updating Tools\n\n"
 	cp $dirProjectDot/{.aliases,.environment,.functions,.prompt} ~/
-	. ~/.bashrc
+	if [[ -f ~/.bashrc ]]
+		then
+			. ~/.bashrc
+	fi
+	if [[ -f ~/.profile ]]
+		then
+			. ~/.profile
+	fi
 }
 
 

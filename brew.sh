@@ -6,6 +6,7 @@ brew upgrade
 # Homebrew Packages
 
 brew install ffmpeg
+brew install git-flow
 brew install grep
 brew install guetzli
 brew install imagemagick

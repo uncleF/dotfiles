@@ -11,6 +11,7 @@ brew install grep
 brew install guetzli
 brew install imagemagick
 brew install ios-webkit-debug-proxy
+brew install lazydocker
 brew install less
 brew install node
 brew install nvm
@@ -64,6 +65,7 @@ brew cask install vagrant
 brew cask install virtualbox
 brew cask install visual-studio-code
 brew cask install vlc
+brew cask install wkhtmltopdf
 
 # Browsers
 

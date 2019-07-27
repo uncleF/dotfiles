@@ -33,7 +33,6 @@ brew cask install anki
 brew cask install appcleaner
 brew cask install aseprite
 brew cask install bartender
-brew cask install bitwarden
 brew cask install blender
 brew cask install ccleaner
 brew cask install cyberduck

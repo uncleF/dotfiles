@@ -55,6 +55,7 @@ brew cask install slack
 brew cask install signal
 brew cask install skitch
 brew cask install spectacle
+brew cask install spotify
 brew cask install steam
 brew cask install sublime-text
 brew cask install teamviewer

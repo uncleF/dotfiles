@@ -54,9 +54,13 @@ alias npmr="rm -rf ./node_modules && npm cache clear && npm i --save-dev"
 
 alias hshm="cd ${homesteadHome}"
 
+# RuPort
+
+alias por="cd ~/RuPort"
+
 # Environment Aliases
 
-alias upbrew="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor"
+alias upbrew="brew -v update; brew upgrade --force-bottle; brew cleanup; brew doctor"
 alias upnpm="npm-check -g -u; npm install npm -g; npm update -g"
 alias upgem="sudo gem update --system; sudo gem update -n/usr/local/bin --no-document"
 alias upd="upbrew; upnpm; upgem"

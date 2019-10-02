@@ -2,7 +2,7 @@
 
 export dirTemp=~/Temp
 
-export dirProjects=~/Projects
+export dirProjects=~/Projects/Personal
 export dirProjectWeb="${dirProjects}"/TemplateX
 export dirProjectMail="${dirProjects}"/MailX
 export dirProjectNode="${dirProjects}"/AppXN
@@ -13,7 +13,13 @@ export remoteProjectWeb="${remoteHome}"/TemplateX.git
 export remoteProjectMail="${remoteHome}"/MailX.git
 export remoteProjectMail="${remoteHome}"/AppXN.git
 
-export homesteadHome=~/Homestead
+export dirBE=~/Projects/BE
+
+export homesteadHome=~/Tools/Homestead
 
 export buildProperties="${dirProjects}"/antBuild.properties
 export buildJSON="${dirProjects}"/gruntBuild.json
+
+export dirHG=~/Projects/HGStudio
+export dirRuPort=~/Projects/RuPort
+export dirYazoo=~/Projects/yazoo

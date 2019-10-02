@@ -42,6 +42,8 @@ alias pctu='prcmt -m "Project Update"'
 alias pctf='prcmt -m "Project Fixes"'
 alias ne='newelm -n'
 
+alias pbe="cd ${dirBE}"
+
 alias chm='git checkout master'
 alias chd='git checkout dev'
 alias gdf='git diff --color --color-words --abbrev | diff-so-fancy'
@@ -54,9 +56,11 @@ alias npmr="rm -rf ./node_modules && npm cache clear && npm i --save-dev"
 
 alias hshm="cd ${homesteadHome}"
 
-# RuPort
+# Work
 
-alias por="cd ~/RuPort"
+alias prp="cd ${dirRuPort}"
+alias phg="cd ${dirHG}"
+alias pyz="cd ${dirYazoo}"
 
 # Environment Aliases
 

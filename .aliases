@@ -61,6 +61,7 @@ alias hshm="cd ${homesteadHome}"
 alias prp="cd ${dirRuPort}"
 alias phg="cd ${dirHG}"
 alias pyz="cd ${dirYazoo}"
+alias prt="cd ${dirTutorials}"
 
 # Environment Aliases
 

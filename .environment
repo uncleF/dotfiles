@@ -23,3 +23,4 @@ export buildJSON="${dirProjects}"/gruntBuild.json
 export dirHG=~/Projects/HGStudio
 export dirRuPort=~/Projects/RuPort
 export dirYazoo=~/Projects/yazoo
+export dirTutorials=~/Projects/Tutorials

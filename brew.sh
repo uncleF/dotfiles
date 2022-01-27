@@ -39,6 +39,7 @@ brew cask install cyberduck
 brew cask install docker
 brew cask install dropbox
 brew cask install evernote
+brew cask install fig
 brew cask install figma
 brew cask install flux
 brew cask install xquartz

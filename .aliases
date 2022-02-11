@@ -1,3 +1,7 @@
+# Helper Aliases
+
+alias '$'=''
+
 # Navigation Aliases
 
 alias tx="propn TemplateX"

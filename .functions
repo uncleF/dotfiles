@@ -712,7 +712,7 @@ function server() {
 		then
 			cd $directory
 			open http://localhost:$port/
-			python -m SimpleHTTPServer $port
+			python3 -m http.server $port
 			cd ..
 		else
 			echo "Nothing to Serve / Missing Directory"

@@ -637,7 +637,7 @@ function prgsbld() {
 # Commit and Push Project Changes
 
 function prcmt() {
-	message="Project Update"
+	message="update project"
 	remote="origin"
 	while getopts ":m:r:" opt; do
 		case $opt in

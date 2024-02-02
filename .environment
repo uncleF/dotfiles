@@ -20,6 +20,7 @@ export homesteadHome=~/Tools/Homestead
 export buildProperties="${dirProjects}"/antBuild.properties
 export buildJSON="${dirProjects}"/gruntBuild.json
 
+export dirDoopy=~/Projects/DoopyDoopGames
 export dirHG=~/Projects/HappyGamesStudio
 export dirRuPort=~/Projects/RU_PORT
 export dirYazoo=~/Projects/yazoo

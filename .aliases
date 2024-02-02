@@ -58,8 +58,9 @@ alias hshm="cd ${homesteadHome}"
 
 # Work
 
-alias prp="cd ${dirRuPort}"
+alias pdp="cd ${dirDoopy}"
 alias phg="cd ${dirHG}"
+alias prp="cd ${dirRuPort}"
 alias pyz="cd ${dirYazoo}"
 alias pts="cd ${dirTutorials}"
 
